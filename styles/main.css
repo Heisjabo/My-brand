@@ -74,15 +74,22 @@ nav .contact-btn{
     justify-content: center;
     color: var(--text-color);
     gap: 4px;
-    padding: 2px 12px;
+    padding: 6px 15px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 5px;
     position: relative;
     border: 1px solid var(--secondary-color); 
     background-color: transparent;
 }
 .contact-btn img{
     max-width: 30px;
+}
+.contact-btn a{
+    text-decoration: none;
+    color: var(--text-color);
+}
+.contact-btn a:hover{
+    color: var(--secondary-color);
 }
 
 .hero{
@@ -374,6 +381,7 @@ nav .contact-btn{
     border-radius: 5px;
     padding: 10px 20px;
     font-size: 16px;
+    align-self: baseline;
     cursor: pointer;
 }
 .contact-form button:hover{
