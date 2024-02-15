@@ -7,12 +7,14 @@
     <title>JABO | Single Blog</title>
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/single.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
 
 <body>
     <nav>
         <h2>JABO.</h2>
-        <ul>
+        <ul class="nav-list">
             <li><a href="../index.html">Home</a></li>
             <li><a href="../index.html#about">About</a></li>
             <li><a href="../index.html#skills">Skills</a></li>
@@ -23,7 +25,7 @@
         <button class="contact-btn">
             <a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>
         </button>
-        <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+        <div class="bx bx-menu" id="menu-icon"></div>
     </nav>
     <main class="single-blog-container">
         <img alt="blog image" src="../assets/img1.jpg" />
@@ -101,6 +103,7 @@
             <a href=""><i class="fa-brands fa-github"></i> Github</a>
         </div>
     </footer>
+    <script src="../app.js"></script>
     <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 

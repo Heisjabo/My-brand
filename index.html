@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My-Brand</title>
     <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
 
 <body>
     <section id="home">
         <nav>
             <h2>JABO.</h2>
-            <ul>
+            <ul class="nav-list">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
@@ -23,7 +25,8 @@
             <button class="contact-btn">
                 <a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>
                 </button>
-            <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+                <div class="bx bx-menu" id="menu-icon"></div>
+            <!-- <button class="menu-btn" id="menu-icon"><i class="fa-solid fa-bars"></i></button> -->
         </nav>
         <div class="hero">
             <div class="home-text">
@@ -33,10 +36,8 @@
                 <p>I'm passionate about creating experiences that are easy to use, accessible,
                     and that meet the user's needs.</p>
             </div>
-            <div>
-                <img alt="image" src="./assets/home-img.png" />
-            </div>
-
+            
+            <img alt="image" src="./assets/home-img.png" />
         </div>
     </section>
     <section id="about">
@@ -210,6 +211,7 @@
             <a href=""><i class="fa-brands fa-github"></i> Github</a>
         </div>
     </footer>
+    <script src="./app.js"></script>
     <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 
