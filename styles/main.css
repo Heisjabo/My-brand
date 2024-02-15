@@ -78,7 +78,7 @@ nav .contact-btn{
     cursor: pointer;
     border-radius: 8px;
     position: relative;
-    border: 2px solid var(--secondary-color); 
+    border: 1px solid var(--secondary-color); 
     background-color: transparent;
 }
 .contact-btn img{
@@ -100,9 +100,16 @@ nav .contact-btn{
 .hero h2{
     color: #58FFB4;
     font-size: 72px;
+    line-height: 1;
 }
 .hero .home-text p{
     font-size: 20px;
+}
+
+.home-text{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .hero .home-text h3{
@@ -236,6 +243,165 @@ nav .contact-btn{
     font-size: 12px;
 }
 
+/* blogs */
+#blogs{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    width: 90%;
+    gap: 10px;
+    margin: 0 auto;
+}
+.blogs-container{
+    display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, auto));
+	align-items: center;
+	gap: 2.5rem;
+	margin-top: 2rem;
+}
+.blog-card{
+    display: flex;
+    flex-direction: column;
+    background-color: #1C1C1C;
+    border-radius: 5px;
+    position: relative;
+}
+.blog-card img{
+    width: 100%;
+	border-radius: 5px;
+	display: block;
+	transition: transform 0.5s;
+}
+.blog-card img:hover{
+    cursor: pointer;
+}
+
+.bog-text{
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 10px;
+}
+
+#blogs .date-stats{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.date-stats button{
+    display: flex;
+    align-items: center;
+    color: var(--special);
+    background-color: transparent;
+    border: none;
+    gap: 10px;
+}
+.date-stats i{
+    font-size: 20px;
+    cursor: pointer;
+}
+.date-stats i:hover{
+    color: var(--secondary-color);
+}
+
+/* contact section */
+
+#contact{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    width: 90%;
+    gap: 10px;
+    margin: 0 auto;
+    border-top: 1px solid #2D2D2D;
+}
+#contact h2{
+    font-size: 24px;
+}
+.contact-container{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    border-bottom: 1px solid #2D2D2D;
+    
+}
+.contact-info{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.contact-info .info-item{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.info-item i{
+    font-size: 24px;
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 20px;
+}
+.contact-form input, .contact-form textarea{
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: var(--secondary-color);
+}
+.contact-form textarea:focus{
+    outline: none; 
+}
+.contact-form textarea{
+    column-span: 6;
+    resize: none;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.contact-form input:focus{
+    outline: none;
+}
+.contact-form button{
+    background-color: var(--secondary-color);
+    color: var(--special);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.contact-form button:hover{
+    transform: scale(0.98);
+}
+
+footer{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-right: 5%;
+    padding-left: 5%;
+    justify-content: space-between;
+}
+footer .socials{
+    display: flex;
+    gap: 20px;
+}
+.socials a{
+    text-decoration: none;
+    color: var(--special);
+    font-size: 16px;
+}
+
+.socials a:hover{
+    color: var(--secondary-color);
+}
+
 
 @media screen and (max-width: 1050px){
     .hero img{
@@ -308,4 +474,17 @@ nav .contact-btn{
         align-self: flex-start;
         gap: 10px;
     }
+
+    /* contact */
+    .contact-form{
+        width: 100%;
+    }
+    .contact-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
 }
