@@ -45,6 +45,22 @@ nav {
     padding: 10px 5%;
     justify-content: space-between;
     align-items: center;
+
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #131313;
+    z-index: 999;
+    margin-bottom: 30px;
+}
+.sticky + .content {
+    padding-top: 102px;
+}
+.active{
+    color: var(--secondary-color);
 }
 
 nav h2 {
@@ -233,7 +249,7 @@ nav .contact-btn{
     width: 100%;
 	border-radius: 5px;
 	display: block;
-	transition: transform 0.5s;
+	cursor: pointer;
 }
 .card-text{
     display: flex;
@@ -444,6 +460,38 @@ footer .socials{
         max-width: 100%;
         text-align: center;
     }
+    .nav-list{
+		position: absolute;
+		top: -1000px;
+		right: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		background: var(--bg-color);
+		text-align: left;
+		transition: all .45s ease;
+        z-index: 10;
+        padding: 10px 0;
+	}
+	.nav-list a{
+		display: block;
+		/* margin: 17px; */
+		font-size: 20px;
+		transition: all .45s ease;
+		color: #fff;
+	}
+	.nav-list a:hover{
+		color: var(--secondary-color);
+	}
+	.nav-list a.active{
+		color: var(--secondary-color);
+	}
+	.nav-list.open{
+		top: 10%;
+	}
+    #home {
+        height: 100%;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -516,7 +564,7 @@ footer .socials{
     /* menu items */
     .nav-list{
 		position: absolute;
-		top: -900px;
+		top: -1000px;
 		right: 0;
 		left: 0;
 		display: flex;
@@ -525,10 +573,11 @@ footer .socials{
 		text-align: left;
 		transition: all .45s ease;
         z-index: 10;
+        padding: 10px 0;
 	}
 	.nav-list a{
 		display: block;
-		margin: 17px;
+		/* margin: 17px; */
 		font-size: 20px;
 		transition: all .45s ease;
 		color: #fff;
@@ -548,6 +597,9 @@ footer .socials{
         flex-direction: column;
         width: 100%;
         gap: 10px;
+    }
+    #home {
+        height: 100%;
     }
     
 
