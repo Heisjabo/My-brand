@@ -54,10 +54,12 @@ nav {
     width: 100%;
     background-color: #131313;
     z-index: 999;
-    margin-bottom: 30px;
 }
 .sticky + .content {
     padding-top: 102px;
+}
+.section {
+    padding-top: 100px !important;
 }
 .active{
     color: var(--secondary-color);

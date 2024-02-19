@@ -11,6 +11,10 @@ window.onscroll = function() {myFunction()};
 
 let header = document.querySelector("nav");
 
+window.addEventListener ("scroll", function() {
+	header.classList.toggle ("sticky", window.scrollY > 100);
+});
+
 let sticky = header.offsetTop;
 
 function myFunction() {
