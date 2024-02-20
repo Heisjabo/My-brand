@@ -7,38 +7,39 @@
   <title>Document</title>
   <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="../styles/addblog.css">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
   <div class="wrapper">
-    <div class="side-container">
+    <div class="side-container" id="side-bar">
       <div class="logo">
         <h1>JABO.</h1>
-        <!-- <i class="fa-solid fa-x menu-close"></i> -->
+        <i class="fa-solid fa-x menu-close"></i>
       </div>
       <ul class="nav">
         <li><a href="./admin.html">
             <i class="fa-solid fa-house side-icon"></i>
             <span>Dashboard</span>
           </a>
-          </li>
-          <li>
-            <a href="./blogs.html">
+        </li>
+        <li>
+          <a href="./blogs.html">
             <i class="fa-solid fa-newspaper side-icon"></i>
             <span>Blogs</span>
           </a>
-          </li>
-          <li class="active">
-            <a href="./addBlog.html">
+        </li>
+        <li class="active">
+          <a href="./addBlog.html">
             <i class="fa-regular fa-pen-to-square side-icon"></i>
             <span>Add a blog</span>
           </a>
-          </li>
-
+        </li>
       </ul>
     </div>
     <div class="header">
-      <!-- <i class="fa-solid fa-bars menu"></i> -->
+      <i class="fa-solid fa-bars" id="menu"></i>
       <div class="message">
         <h1>Dashboard</h1>
         <p>Hi, welcome back!</p>
@@ -55,16 +56,59 @@
           </div>
         </div>
         <div class="avatar">
-          <i class="fa-solid fa-user"></i>
+          <img src="../assets/profile.jpg" />
         </div>
+      </div>
+      <div class="dashboard-profile">
+        <ul class="profile-list">
+          <li>Profile</li>
+          <li>Settings</li>
+          <li><a href="../index.html">Logout</a></li>
+        </ul>
       </div>
     </div>
   </div>
   <section class="dashboard-home">
-    
-   <h1>Add a new blog</h1>
+    <div class="addblog-container">
+      <h1>Add a new Blog</h1>
+      <form>
+        <div class="add-input">
+          <label for="title">Title</label>
+          <input type="text" />
+        </div>
+        <div class="add-input">
+          <label for="image">Image</label>
+          <input type="file" />
+        </div>
+        <div class="add-input">
+          <label for="body">Body</label>
+          <div id="editor">
+          </div>
+        </div>
+      </form>
+    </div>
   </section>
-
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill-font-size.js"></script>
+  <script>
+    let quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'align': [] }],
+          ['link', 'image'],
+          ['clean']
+        ],
+        fontSize: {
+          options: [10, 12, 14, 16, 18, 20, 24, 28, 32]
+        }
+      }
+    });
+  </script>
+  <script src="./admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 

@@ -11,10 +11,10 @@
 
 <body>
   <div class="wrapper">
-    <div class="side-container">
+    <div class="side-container" id="side-bar">
       <div class="logo">
         <h1>JABO.</h1>
-        <!-- <i class="fa-solid fa-x menu-close"></i> -->
+        <i class="fa-solid fa-x menu-close"></i>
       </div>
       <ul class="nav">
         <li class="active"><a href="./admin.html">
@@ -55,8 +55,15 @@
           </div>
         </div>
         <div class="avatar">
-          <i class="fa-solid fa-user"></i>
+          <img src="../assets/profile.jpg" />
         </div>
+      </div>
+      <div class="dashboard-profile">
+        <ul class="profile-list">
+          <li>Profile</li>
+          <li>Settings</li>
+          <li><a href="../index.html">Logout</a></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -119,14 +126,14 @@
         <div class="message">
           <div class="deteails">
             <h3>John Doe</h3>
-          <p>Hello this is a test message</p>
+            <p>Hello this is a test message</p>
           </div>
           <i class="fa-solid fa-trash"></i>
         </div>
       </div>
     </div>
   </section>
-
+  <script src="./admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 

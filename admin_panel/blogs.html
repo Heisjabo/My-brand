@@ -7,14 +7,15 @@
   <title>Document</title>
   <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="../styles/blogs.css">
 </head>
 
 <body>
   <div class="wrapper">
-    <div class="side-container">
+    <div class="side-container" id="side-bar">
       <div class="logo">
         <h1>JABO.</h1>
-        <!-- <i class="fa-solid fa-x menu-close"></i> -->
+        <i class="fa-solid fa-x menu-close"></i>
       </div>
       <ul class="nav">
         <li ><a href="./admin.html">
@@ -38,7 +39,7 @@
       </ul>
     </div>
     <div class="header">
-      <!-- <i class="fa-solid fa-bars menu"></i> -->
+      <i class="fa-solid fa-bars" id="menu"></i>
       <div class="message">
         <h1>Dashboard</h1>
         <p>Hi, welcome back!</p>
@@ -55,16 +56,61 @@
           </div>
         </div>
         <div class="avatar">
-          <i class="fa-solid fa-user"></i>
+          <img src="../assets/profile.jpg" />
         </div>
+      </div>
+      <div class="dashboard-profile">
+        <ul class="profile-list">
+          <li>Profile</li>
+          <li>Settings</li>
+          <li><a href="../index.html">Logout</a></li>
+        </ul>
       </div>
     </div>
   </div>
   <section class="dashboard-home">
-    
-   <h1>blogs page</h1>
+    <div class="blogs-container">
+      <h1>My Blogs</h1>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>Blog 1</td>
+          <td>John Doe</td>
+          <td>12/12/2020</td>
+          <td class="actions">
+            <i class="fa-regular fa-pen-to-square" id="edit"></i>
+            <i class="fa-solid fa-trash" id="delete"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Blog 2</td>
+          <td>John Doe</td>
+          <td>12/12/2020</td>
+          <td class="actions">
+            <i class="fa-regular fa-pen-to-square" id="edit"></i>
+            <i class="fa-solid fa-trash" id="delete"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Blog 3</td>
+          <td>John Doe</td>
+          <td>12/12/2020</td>
+          <td class="actions">
+            <i class="fa-regular fa-pen-to-square" id="edit"></i>
+            <i class="fa-solid fa-trash" id="delete"></i>
+          </td>
+        </tr>
+      </table>
+    </div>
+  
+  
   </section>
-
+  <script src="./admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 

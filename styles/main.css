@@ -432,6 +432,11 @@ footer .socials{
 .socials a:hover{
     color: var(--secondary-color);
 }
+.avatar img{
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 100%;
+}
 
 
 @media screen and (max-width: 1050px){
@@ -493,6 +498,12 @@ footer .socials{
 	}
     #home {
         height: 100%;
+    }
+    .add-input{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
     }
 }
 
@@ -603,6 +614,5 @@ footer .socials{
     #home {
         height: 100%;
     }
-    
 
 }

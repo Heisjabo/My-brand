@@ -27,6 +27,7 @@ body {
     position: fixed;
     left: 0;
     z-index: 1000;
+    transition: 0.5s ease-in-out;
 }
 
 ul li a {
@@ -65,6 +66,7 @@ ul li a {
 
 /* header */
 .header {
+    position: relative;
     width: 100vw;
     height: 90px;
     padding: 5px 30px 5px 255px;
@@ -73,7 +75,49 @@ ul li a {
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    background-color: #F2F8FF;
 }
+.dashboard-profile{
+    display: none;
+    position: absolute;
+    top: 5.5rem;
+    right: 1.5rem;
+    width: 120px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: white;
+    border: 1px solid gray;
+    animation: slideDown 0.5s ease forwards;
+}
+
+.profile-open{
+    display: block;
+}
+.dashboard-profile::before{
+    content: '';
+    position: absolute;
+    top: -0.7rem;
+    right: 1.1rem;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    background-color: white;
+    border-left: 1px solid gray;
+    border-top: 1px solid gray;
+}
+.dashboard-profile ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+}
+.dashboard-profile ul li{
+    cursor: pointer;  
+}
+.dashboard-profile ul li:hover{
+    color: #40CF8E;
+}
+
 
 #menu {
     display: none;
@@ -150,6 +194,12 @@ ul li a {
     border-radius: 100%;
     background-color: white;
     cursor: pointer;
+}
+.avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 2px solid #40CF8E;
 }
 
 .avatar i {
@@ -280,10 +330,24 @@ ul li a {
     color: #b72727;
     cursor: pointer;
 }
+.logo{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;   
+}
+.logo i{
+    display: none;
+    font-size: 20px;
+    color: #131313;
+    cursor: pointer;
+}
 
 @media screen and (max-width: 1050px) {
     .side-container {
         display: none;
+    }
+    .logo i{
+        display: block;
     }
 
     .message h1 {
@@ -331,6 +395,10 @@ ul li a {
         margin-left: 0;
         margin: 20px auto;
     }
+    .side-open{
+        display: flex;
+        transform: translateX(0);
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -341,6 +409,13 @@ ul li a {
     .dashboard-home {
         margin-top: 6rem;
         margin-left: 0;
+    }
+    .side-open{
+        display: flex;
+        transform: translateX(0);
+    }
+    .logo i{
+        display: block;
     }
 
     .header {
@@ -374,5 +449,16 @@ ul li a {
         width: 90%;
         margin-left: 0;
         margin: 20px auto;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-80%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
