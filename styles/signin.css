@@ -9,6 +9,10 @@
     position: relative;
     height: 80vh;
 }
+.error{
+    color: red;
+    font-size: 14px;
+}
 
 .signin-container{
     display: flex;
@@ -54,17 +58,17 @@
     outline: none;
 }
 .form-container form button{
-    background-color: var(--secondary-color);
+    background-color: #034b2a;
     border-radius: 5px;
     color: var(--text-color);
-    padding: 5px 15px;
+    padding: 8px 15px;
     border: none;
     cursor: pointer;
     font-size: 16px;
 }
-.form-container button:hover{
+/* .form-container button:hover{
     transform: scale(0.99);
-}
+} */
 .form-container a{
     text-decoration: none;
     color: var(--secondary-color);

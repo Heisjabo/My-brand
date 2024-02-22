@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link rel="stylesheet" href="../styles/blogs.css">
+  <link rel="stylesheet" href="../styles/addblog.css">
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
@@ -107,9 +109,55 @@
         </tr>
       </table>
     </div>
-  
-  
+
+    <!-- editing a blog model -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="addblog-container">
+          <h1>Edit Blog</h1>
+          <form class="edit-form">
+            <div class="add-input">
+              <label for="title">Title</label>
+              <input type="text" />
+            </div>
+            <div class="add-input">
+              <label for="image">Image</label>
+              <input type="file" />
+            </div>
+            <div class="add-input">
+              <label for="body">Body</label>
+              <div id="editor"></div>
+            </div>
+            <button type="submit">Update Blog</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- modal ends -->
+    
   </section>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill-font-size.js"></script>
+  <script>
+    let quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ 'header': [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'align': [] }],
+          ['link', 'image'],
+          ['clean']
+        ],
+        fontSize: {
+          options: [10, 12, 14, 16, 18, 20, 24, 28, 32]
+        }
+      }
+    });
+  </script>
   <script src="./admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>

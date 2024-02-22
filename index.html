@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My-Brand</title>
+    <title>My Brand</title>
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet"
     href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -20,7 +20,7 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#blogs">Blogs</a></li>
-                <li><a href="./screens/signin.html">Signin</a></li>
+                <li><a href="./screens/signin.html">SignIn</a></li>
             </ul>
             <button class="contact-btn">
                 <a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="project-card">
-                <a href="https://car-ridex.netlify.app/" target="_blank"><img alt="" src="./assets/img1.jpg" /></a>
+                <a href="https://car-ridex.netlify.app/" target="_blank"><img alt="" src="./assets/img6.jpg" /></a>
                 <div class="card-text">
                     <h3>Car Ridex</h3>
                     <p>A car rental website where one can order for a rental car or even buy one.</p>
@@ -197,10 +197,19 @@
                     </div>
                 </div>
             </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Your name" />
-                <input type="text" placeholder="Your email" />
-                <textarea placeholder="Your message"></textarea>
+            <form class="contact-form" id="form">
+                <div class="input-el">
+                    <input type="text" placeholder="Your name" id="name" />
+                    <p id="name-err"></p>
+                </div>
+                <div class="input-el">
+                    <input type="text" placeholder="Your email" id="email" />
+                    <p id="email-err"></p>
+                </div>
+                <div class="input-el">
+                    <textarea placeholder="Your message" id="message"></textarea>
+                    <p id="msg-err"></p>
+                </div>
                 <button type="submit">Send Message</button>
             </form>
         </div>

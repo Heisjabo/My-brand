@@ -19,7 +19,7 @@
             <li><a href="../index.html#skills">Skills</a></li>
             <li><a href="../index.html#projects">Projects</a></li>
             <li><a href="../index.html#blogs">Blogs</a></li>
-            <li><a href="#signin">Signin</a></li>
+            <li><a href="../screens/signin.html">Signin</a></li>
         </ul>
         <button class="contact-btn">
             <a href="../index.html#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>
@@ -27,24 +27,28 @@
             <div class="bx bx-menu" id="menu-icon"></div>
     </nav>
     <main class="signin-container">
+        <h2>Sign up</h2>
         <div class="form-container">
-            <h2>Signup</h2>
-            <form class="signin-form">
+            <form class="signin-form" id="signup-form">
                 <div class="input-item">
                     <label for="name">Fullname</label>
-                    <input type="text" />
+                    <input type="text" id="fullname" />
+                    <p class="error fullname-err"></p>
                 </div>
                 <div class="input-item">
-                    <label for="email">Email</label>
-                    <input type="email" />
+                   <label for="email">Email</label>
+                    <input type="text" id="email"/>
+                    <p class="error email-err"></p>
                 </div>
                 <div class="input-item">
                     <label for="Password">Password</label>
-                    <input type="password" />
+                    <input type="password" id="password"/>
+                    <p class="error password-err"></p>
                 </div>
                 <div class="input-item">
                     <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" />
+                    <input type="password" id="confirmPassword" />
+                    <p class="error confirmPassword-err"></p>
                 </div>
                 <button type="submit">Signup</button>
             </form>
@@ -52,6 +56,7 @@
         </div>
     </main>
 </section>
+<script src="./signup.js"></script>
 <script src="../app.js"></script>
 <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>

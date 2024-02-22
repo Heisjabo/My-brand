@@ -34,7 +34,6 @@ body {
     align-items: center;
     width: 100%;
     margin: 0 auto;
-    /* display: flex; */
     justify-content: center;
     height: 100vh;
 }
@@ -379,10 +378,10 @@ nav .contact-btn{
 }
 .contact-form input, .contact-form textarea{
     background-color: transparent;
-    border: 1px solid var(--secondary-color);
+    border: 1px solid var(--special);
     border-radius: 5px;
     padding: 10px 15px;
-    color: var(--secondary-color);
+    color: var(--text-color);
 }
 .contact-form textarea:focus{
     outline: none; 
@@ -398,7 +397,7 @@ nav .contact-btn{
     outline: none;
 }
 .contact-form button{
-    background-color: var(--secondary-color);
+    background-color: #034b2a;
     color: var(--special);
     border: none;
     border-radius: 5px;
@@ -428,14 +427,24 @@ footer .socials{
     color: var(--special);
     font-size: 16px;
 }
+.error{
+    color: red;
+    font-size: 12px;
+}
 
 .socials a:hover{
     color: var(--secondary-color);
 }
-.avatar img{
-    max-width: 60px;
-    max-height: 60px;
-    border-radius: 100%;
+.input-el{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.input-el p{
+    color: red;
+    font-size: 12px;
 }
 
 
@@ -469,7 +478,7 @@ footer .socials{
     }
     .nav-list{
 		position: absolute;
-		top: -1000px;
+		top: -900px;
 		right: 0;
 		left: 0;
 		display: flex;
@@ -577,9 +586,9 @@ footer .socials{
     /* menu items */
     .nav-list{
 		position: absolute;
-		top: -1000px;
+		top: -900px;
 		right: 0;
-		left: 0;
+		left: 0;  
 		display: flex;
 		flex-direction: column;
 		background: var(--bg-color);
