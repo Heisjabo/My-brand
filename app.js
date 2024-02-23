@@ -88,5 +88,129 @@ function validateForm(){
 	}
 }
 
+function slider() {
+	const container = document.querySelector('.projects-container');
+	const cards = document.querySelectorAll('.project-card');
+	const firstCard = cards[0];
+	const cardWidth = firstCard.offsetWidth + parseInt(window.getComputedStyle(firstCard).marginRight);
+  
+	container.appendChild(firstCard.cloneNode(true));
+  
+	let position = 0;
+  
+	function slideLeft() {
+	  position -= cardWidth;
+	  container.style.transform = `translateX(${position}px)`;
+	  container.style.transition = 'transform 1s ease-in-out';
+  
+	  if (position <= -container.scrollWidth + cardWidth) {
+		setTimeout(() => {
+		  position = 0;
+		  container.style.transform = `translateX(${position}px)`;
+		  container.style.transition = 'none';
+		}, 1000);
+	  }
+	}
+  
+	setInterval(slideLeft, 5000);
+  
+	const paginationContainer = document.createElement('div');
+	paginationContainer.classList.add('pagination-container');
+	container.parentNode.insertBefore(paginationContainer, container.nextSibling);
+  
+	cards.forEach((card, index) => {
+	  const paginationDot = document.createElement('span');
+	  paginationDot.classList.add('pagination-dot');
+	  paginationDot.addEventListener('click', () => {
+		position = -index * cardWidth;
+		container.style.transform = `translateX(${position}px)`;
+		container.style.transition = 'transform 1s ease-in-out';
+	  });
+	  paginationContainer.appendChild(paginationDot);
+	});
+  
+	function highlightPaginationDot() {
+	  const activeIndex = Math.abs(position / cardWidth);
+	  const paginationDots = paginationContainer.querySelectorAll('.pagination-dot');
+	  paginationDots.forEach((dot, index) => {
+		if (index === activeIndex) {
+		  dot.classList.add('active');
+		} else {
+		  dot.classList.remove('active');
+		}
+	  });
+	}
+  
+
+	window.addEventListener('load', highlightPaginationDot);
+	container.addEventListener('transitionend', highlightPaginationDot);
+  }
+
+  
+  window.addEventListener('load', slider);
+
+  function slideBlogs(){
+	const container = document.querySelector('.blogs-container');
+	const cards = document.querySelectorAll('.blog-card');
+	const firstCard = cards[0];
+	const cardWidth = firstCard.offsetWidth + parseInt(window.getComputedStyle(firstCard).marginRight);
+  
+	container.appendChild(firstCard.cloneNode(true));
+  
+	let position = 0;
+  
+	function slideLeft() {
+	  position -= cardWidth;
+	  container.style.transform = `translateX(${position}px)`;
+	  container.style.transition = 'transform 1s ease-in-out';
+  
+	  if (position <= -container.scrollWidth + cardWidth) {
+		setTimeout(() => {
+		  position = 0;
+		  container.style.transform = `translateX(${position}px)`;
+		  container.style.transition = 'none';
+		}, 1000);
+	  }
+	}
+  
+	setInterval(slideLeft, 5000);
+  
+	const paginationContainer = document.createElement('div');
+	paginationContainer.classList.add('pagination-container');
+	container.parentNode.insertBefore(paginationContainer, container.nextSibling);
+  
+	cards.forEach((card, index) => {
+	  const paginationDot = document.createElement('span');
+	  paginationDot.classList.add('pagination-dot');
+	  paginationDot.addEventListener('click', () => {
+		position = -index * cardWidth;
+		container.style.transform = `translateX(${position}px)`;
+		container.style.transition = 'transform 1s ease-in-out';
+	  });
+	  paginationContainer.appendChild(paginationDot);
+	});
+  
+	function highlightPaginationDot() {
+	  const activeIndex = Math.abs(position / cardWidth);
+	  const paginationDots = paginationContainer.querySelectorAll('.pagination-dot');
+	  paginationDots.forEach((dot, index) => {
+		if (index === activeIndex) {
+		  dot.classList.add('active');
+		} else {
+		  dot.classList.remove('active');
+		}
+	  });
+	}
+  
+
+	window.addEventListener('load', highlightPaginationDot);
+	container.addEventListener('transitionend', highlightPaginationDot);
+  }
+  window.addEventListener('load', slideBlogs);
+  
+
+
+
+
 
 

@@ -15,6 +15,10 @@ body {
     color: #131313;
     overflow-x: hidden;
 }
+.error{
+    color: red;
+    font-size: 14px;
+}
 
 .side-container {
     background-color: white;

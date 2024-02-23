@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>JABO | Add a blog</title>
   <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
   <link rel="stylesheet" href="../styles/addblog.css">
@@ -71,20 +71,23 @@
   <section class="dashboard-home">
     <div class="addblog-container">
       <h1>Add a new Blog</h1>
-      <form>
+      <form class="addBlogForm">
         <div class="add-input">
           <label for="title">Title</label>
-          <input type="text" />
+          <input type="text" id="title" />
+          <p class="error title-err"></p>
         </div>
         <div class="add-input">
           <label for="image">Image</label>
-          <input type="file" />
+          <input type="file" id="image" />
+          <p class="error image-err"></p>
         </div>
         <div class="add-input">
           <label for="body">Body</label>
           <div id="editor">
           </div>
         </div>
+        <p class="error body-err"></p>
         <button type="submit">Add Blog</button>
       </form>
     </div>
@@ -103,12 +106,10 @@
           ['link', 'image'],
           ['clean']
         ],
-        fontSize: {
-          options: [10, 12, 14, 16, 18, 20, 24, 28, 32]
-        }
       }
     });
   </script>
+  <script src="./addblog.js"></script>
   <script src="./admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
