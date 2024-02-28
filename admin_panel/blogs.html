@@ -73,8 +73,8 @@
   <section class="dashboard-home">
     <div class="blogs-container">
       <h1>My Blogs</h1>
-      <table>
-        <tr>
+      <table class="blogs-table">
+        <!-- <tr>
           <th>Title</th>
           <th>Author</th>
           <th>Date</th>
@@ -106,7 +106,7 @@
             <i class="fa-regular fa-pen-to-square" id="edit"></i>
             <i class="fa-solid fa-trash" id="delete"></i>
           </td>
-        </tr>
+        </tr> -->
       </table>
     </div>
 
@@ -118,12 +118,12 @@
           <h1>Edit Blog</h1>
           <form class="edit-form">
             <div class="add-input">
-              <label for="title">Title</label>
-              <input type="text" />
+              <label for="title" >Title</label>
+              <input type="text" id="title" />
             </div>
             <div class="add-input">
               <label for="image">Image</label>
-              <input type="file" />
+              <input type="file" id="image" />
             </div>
             <div class="add-input">
               <label for="body">Body</label>
@@ -139,7 +139,6 @@
     
   </section>
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script src="https://cdn.quilljs.com/1.3.6/quill-font-size.js"></script>
   <script>
     let quill = new Quill('#editor', {
       theme: 'snow',
@@ -151,14 +150,13 @@
           [{ 'align': [] }],
           ['link', 'image'],
           ['clean']
-        ],
-        fontSize: {
-          options: [10, 12, 14, 16, 18, 20, 24, 28, 32]
-        }
+        ]
       }
     });
   </script>
-  <script src="./admin.js"></script>
+  <!-- <script src="../script/admin.js"></script> -->
+  <script src="../script/fetchBlogs.js"></script>
+  <script src="../script/admin.js"></script>
   <script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
 </body>
 

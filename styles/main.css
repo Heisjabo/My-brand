@@ -352,10 +352,10 @@ nav .contact-btn {
     cursor: pointer;
 }
 
-.bog-text {
+.blog-text {
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
+    padding: 15px 20px !important;
     gap: 10px;
 }
 
@@ -363,6 +363,10 @@ nav .contact-btn {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+.blog-liked i{
+    color: var(--secondary-color) !important;
+    cursor: pointer;
 }
 
 .date-stats button {
