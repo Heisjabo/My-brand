@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>JABO | Admin Panel</title>
   <link rel="stylesheet" href="../styles/admin.css">
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
 </head>
@@ -62,7 +62,7 @@
         <ul class="profile-list">
           <li>Profile</li>
           <li>Settings</li>
-          <li><a href="../index.html">Logout</a></li>
+          <li onclick="logout()">Logout</li>
         </ul>
       </div>
     </div>
@@ -72,7 +72,7 @@
       <div class="card-item">
         <div class="card-details">
           <p>Users</p>
-          <h1>00</h1>
+          <h1 id="users-count">00</h1>
         </div>
         <div class="card-icon">
           <i class="fa-solid fa-user user"></i>
@@ -81,7 +81,7 @@
       <div class="card-item">
         <div className="card-details">
           <p>Blogs</p>
-          <h1>00</h1>
+          <h1 id="blogs-count">00</h1>
         </div>
         <div class="card-icon">
           <i class="fa-solid fa-newspaper blog"></i>
@@ -90,7 +90,7 @@
       <div class="card-item">
         <div class="card-details">
           <p>Likes</p>
-          <h1>00</h1>
+          <h1 id="likes-count">00</h1>
         </div>
         <div class="card-icon">
           <i class="fa-regular fa-thumbs-up like"></i>
@@ -99,7 +99,7 @@
       <div class="card-item">
         <div class="card-details">
           <p>Comments</p>
-          <h1>00</h1>
+          <h1 id="comments-count">00</h1>
         </div>
         <div class="card-icon">
           <i class="fa-regular fa-comment comment"></i>

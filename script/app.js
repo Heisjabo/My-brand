@@ -41,6 +41,9 @@ function myFunction() {
   });
 })();
 
+
+
+
 // ====== displaying the blogs ========
 
 const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
@@ -111,16 +114,68 @@ blogPosts.forEach(blogPost => {
   blogsContainer.appendChild(blogCardDiv);
 });
 
+// logged user tracking
+
+const user = JSON.parse(sessionStorage.getItem('user'));
+
+
+const navList = document.querySelector('.nav-list');
+const signInLink = document.querySelector('.nav-list a[href="./screens/signin.html"]');
+const contactBtn = document.querySelector('.contact-btn');
+const navbar = document.querySelector('nav')
+
+if (user) {
+  const avatar = document.createElement('div');
+  avatar.classList.add('avatar');
+  avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+
+  signInLink.remove();
+
+  navbar.appendChild(avatar);
+  navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
+  contactBtn.remove()
+
+  const signOutLink = document.getElementById('signOut');
+  signOutLink.addEventListener('click', () => {
+    sessionStorage.removeItem('user');
+    location.reload();
+  });
+} else {
+  document.querySelector('.avatar').remove();
+  document.getElementById('signOut').remove();
+  navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
+}
+
+if (user) {
+  contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+} else {
+  contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+}
+
+// logged user tracking end
 
 
 
-// =======  contact me validation =======
+//  contact me form
 
 const name = document.getElementById("name");
 const email = document.getElementById("email");
 const message = document.getElementById("message");
 const form = document.getElementById("form");
 const error = document.getElementById("error");
+
+name.addEventListener("input", () => {
+  validateName();
+});
+
+email.addEventListener("input", () => {
+  validateEmail();
+});
+
+message.addEventListener("input", () => {
+  validateMessage();
+});
+
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -130,29 +185,52 @@ form.addEventListener("submit", (e) => {
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-function validateForm() {
+function validateName() {
   const nameEl = name.value.trim();
-  const emailEl = email.value.trim();
-  const messageEl = message.value.trim();
 
   if (nameEl == "") {
     document.getElementById("name-err").innerHTML = "please enter your name";
-  } else if (nameEl !== "") {
+    return false;
+  } else {
     document.getElementById("name-err").innerHTML = "";
+    return true;
   }
+}
+
+function validateEmail() {
+  const emailEl = email.value.trim();
+
   if (emailEl == "") {
     document.getElementById("email-err").innerHTML = "please enter your email";
-  } else if (emailEl.match(emailRegex)) {
-    document.getElementById("email-err").innerHTML = "";
-  } else {
+    return false;
+  } else if (!emailEl.match(emailRegex)) {
     document.getElementById("email-err").innerHTML =
       "please enter a valid email";
+    return false;
+  } else {
+    document.getElementById("email-err").innerHTML = "";
+    return true;
   }
+}
+
+function validateMessage() {
+  const messageEl = message.value.trim();
 
   if (messageEl == "") {
     document.getElementById("msg-err").innerHTML = "please type a message";
-  } else if (messageEl !== "" && nameEl !== "" && emailEl.match(emailRegex)) {
+    return false;
+  } else {
     document.getElementById("msg-err").innerHTML = "";
+    return true;
+  }
+}
+
+function validateForm() {
+  const isValidName = validateName();
+  const isValidEmail = validateEmail();
+  const isValidMessage = validateMessage();
+
+  if (isValidName && isValidEmail && isValidMessage) {
     const formData = JSON.parse(localStorage.getItem("messages")) || [];
     formData.push({
       name: name.value,
@@ -162,10 +240,9 @@ function validateForm() {
     localStorage.setItem("messages", JSON.stringify(formData));
     alert("your message was sent successfully!");
     form.reset();
-  } else {
-    return false;
   }
 }
+
 
 function slider() {
   const container = document.querySelector(".projects-container");

@@ -129,7 +129,8 @@ document.querySelector(".edit-form").addEventListener("submit", async function (
       localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
       alert("blog was updated successfully!");
       modal.style.display = "none";
-      window.location.reload();
+      window.location.href = `/screens/singleBlog.html?id=${blogPost.id}`
+
     }
   }
 });

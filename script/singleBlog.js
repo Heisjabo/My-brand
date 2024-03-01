@@ -28,6 +28,47 @@ function myFunction() {
   }
 }
 
+// logged user tracking
+
+const user = JSON.parse(sessionStorage.getItem('user'));
+
+
+const navList = document.querySelector('.nav-list');
+const signInLink = document.querySelector('.signin');
+const contactBtn = document.querySelector('.contact-btn');
+const navbar = document.querySelector('nav')
+
+if (user) {
+  const avatar = document.createElement('div');
+  avatar.classList.add('avatar');
+  avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+
+  signInLink.remove();
+
+  navbar.appendChild(avatar);
+  navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
+  contactBtn.remove()
+
+  const signOutLink = document.getElementById('signOut');
+  signOutLink.addEventListener('click', () => {
+    sessionStorage.removeItem('user');
+    location.reload();
+  });
+} else {
+  document.querySelector('.avatar').remove();
+  document.getElementById('signOut').remove();
+  navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
+}
+
+if (user) {
+  contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+} else {
+  contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+}
+
+// logged user tracking end
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const blogId = urlParams.get('id');
 
@@ -62,7 +103,7 @@ blogPost.comments.forEach(comment => {
   const commentItem = document.createElement('div');
   commentItem.classList.add('comment-item');
   commentItem.innerHTML = `
-    <img alt="" src="../assets/user-circle.png"/>
+    <div class="avatar">${generateAvatar(comment.name)}</div>
     <div class="comment-text">
       <h4>${comment.name}</h4>
       <p>${comment.commentText}</p>
@@ -87,7 +128,12 @@ likeButton.addEventListener('click', () => {
   }
 });
 
-//  ==== comment form ========
+// ==== comment form ========
+function generateAvatar(name) {
+  return name.split(' ').map(name => name[0]).join('').toUpperCase();
+}
+
+
 
 const commentForm = document.querySelector('.single-blog-container .add-comment form');
 commentForm.addEventListener('submit', (e) => {
@@ -95,24 +141,34 @@ commentForm.addEventListener('submit', (e) => {
   const commentTextarea = commentForm.querySelector('textarea');
   const commentText = commentTextarea.value.trim();
   if (commentText) {
-    blogPost.comments.push({ name: 'John Doe', commentText, date: new Date().toLocaleString() });
+    const loggedUser = JSON.parse(sessionStorage.getItem('user'));
+    const avatarContent = generateAvatar(loggedUser.fullName);
+    if (loggedUser) {
+      const username = loggedUser.fullName;
+      blogPost.comments.push({ name: username, commentText, date: new Date().toLocaleString() });
 
-    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
+      localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
 
-    commentTextarea.value = '';
+      commentTextarea.value = '';
 
-    const commentItem = document.createElement('div');
-    commentItem.classList.add('comment-item');
-    commentItem.innerHTML = `
-    <img alt="" src="../assets/user-circle.png"/>
-      <div class="comment-text">
-        <h4>John Doe</h4>
-        <p>${commentText}</p>
-        <span class="time">${new Date().toLocaleString()}</span>
-      </div>
-    `;
-    commentsContainer.prepend(commentItem);
+      const commentItem = document.createElement('div');
+      commentItem.classList.add('comment-item');
+      commentItem.innerHTML = `
+      <div class="avatar">${avatarContent}</div>
+        <div class="comment-text">
+          <h4>${username}</h4>
+          <p>${commentText}</p>
+          <span class="time">${new Date().toLocaleString()}</span>
+        </div>
+      `;
+      commentsContainer.prepend(commentItem);
+    } else {
+      alert('Please log in to leave a comment.');
+    }
   }
 });
+
+
+
 
 

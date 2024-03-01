@@ -378,6 +378,20 @@ nav .contact-btn {
     gap: 10px;
 }
 
+.avatar{
+    background-color: antiquewhite;
+    color: #131313;
+    border-radius: 100%;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .date-stats i {
     font-size: 20px;
     cursor: pointer;
@@ -601,6 +615,9 @@ footer .socials {
     .blog-card{
         flex: 0 0 50%;
     }
+    nav .avatar{
+        display: none;
+    }
     
 }
 
@@ -624,6 +641,9 @@ footer .socials {
         background-color: transparent;
         color: var(--special);
         cursor: pointer;
+    }
+    nav .avatar{
+        display: none;
     }
 
     .hero {
@@ -736,5 +756,8 @@ footer .socials {
   @media (max-width: 480px) {
     #projects .project-card {
       flex: 0 0 100%;
+    }
+    nav .avatar{
+        display: none;
     }
   }
