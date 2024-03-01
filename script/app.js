@@ -314,8 +314,6 @@ function slideBlogs() {
     firstCard.offsetWidth +
     parseInt(window.getComputedStyle(firstCard).marginRight);
 
-  // container.appendChild(firstCard.cloneNode(true));
-
   let position = 0;
 
   function slideLeft() {

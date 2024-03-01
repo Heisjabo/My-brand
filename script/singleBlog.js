@@ -28,43 +28,7 @@ function myFunction() {
   }
 }
 
-// logged user tracking
 
-const user = JSON.parse(sessionStorage.getItem('user'));
-
-
-const navList = document.querySelector('.nav-list');
-const signInLink = document.querySelector('.signin');
-const contactBtn = document.querySelector('.contact-btn');
-const navbar = document.querySelector('nav')
-
-if (user) {
-  const avatar = document.createElement('div');
-  avatar.classList.add('avatar');
-  avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
-
-  signInLink.remove();
-
-  navbar.appendChild(avatar);
-  navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
-  contactBtn.remove()
-
-  const signOutLink = document.getElementById('signOut');
-  signOutLink.addEventListener('click', () => {
-    sessionStorage.removeItem('user');
-    location.reload();
-  });
-} else {
-  document.querySelector('.avatar').remove();
-  document.getElementById('signOut').remove();
-  navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
-}
-
-if (user) {
-  contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-} else {
-  contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-}
 
 // logged user tracking end
 
@@ -142,8 +106,8 @@ commentForm.addEventListener('submit', (e) => {
   const commentText = commentTextarea.value.trim();
   if (commentText) {
     const loggedUser = JSON.parse(sessionStorage.getItem('user'));
-    const avatarContent = generateAvatar(loggedUser.fullName);
     if (loggedUser) {
+      const avatarContent = generateAvatar(loggedUser.fullName);
       const username = loggedUser.fullName;
       blogPost.comments.push({ name: username, commentText, date: new Date().toLocaleString() });
 
@@ -167,6 +131,44 @@ commentForm.addEventListener('submit', (e) => {
     }
   }
 });
+
+// logged user tracking
+
+const user = JSON.parse(sessionStorage.getItem('user'));
+
+
+const navList = document.querySelector('.nav-list');
+const signInLink = document.querySelector('.signin');
+const contactBtn = document.querySelector('.contact-btn');
+const navbar = document.querySelector('nav')
+
+if (user) {
+  const avatar = document.createElement('div');
+  avatar.classList.add('avatar');
+  avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+
+  signInLink.remove();
+
+  navbar.appendChild(avatar);
+  navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
+  contactBtn.remove()
+
+  const signOutLink = document.getElementById('signOut');
+  signOutLink.addEventListener('click', () => {
+    sessionStorage.removeItem('user');
+    location.reload();
+  });
+} else {
+  document.querySelector('.avatar').remove();
+  document.getElementById('signOut').remove();
+  navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
+}
+
+if (user) {
+  contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+} else {
+  contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+}
 
 
 

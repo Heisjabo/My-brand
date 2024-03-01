@@ -46,9 +46,6 @@ avatar.onclick = () => {
     profile.classList.toggle('profile-open');
 }
 
-// messagesContainer.innerHTML = '';
-
-console.log(messages)
 
 for (let index = 0; index < messages.length; index++) {
   const message = messages[index];
