@@ -1,0 +1,80 @@
+.addblog-container{
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+.addblog-container h1{
+    font-size: 24px;
+    font-weight: 500;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    width: 50%;
+    margin: 20px 0;
+    
+}
+form input, #editor {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #58FFB4;
+    border-radius: 5px;
+    height: 100%;
+
+}
+form input:focus{
+    outline: none;
+}
+form textarea:focus{
+    outline: none;
+}
+form label{
+    font-size: 14px;
+    font-weight: 500;
+}
+.add-input{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+#editor{
+    overflow-y: auto;
+}
+button[type="submit"]{
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    background-color: #40CF8E;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+
+
+@media screen and (max-width: 1050px){
+    form{
+        width: 90%;
+    }
+    button[type="submit"]{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 600px) {
+    form{
+        width: 90%;
+    }
+    button[type="submit"]{
+        width: 100%;
+    }
+}

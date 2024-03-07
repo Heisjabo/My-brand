@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JABO | Signin </title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/signin.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <section id="signin">
+    <nav>
+        <h2>JABO.</h2>
+        <ul class="nav-list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#skills">Skills</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#blogs">Blogs</a></li>
+            <li><a href="./signin.html">SignIn</a></li>
+        </ul>
+        <button class="contact-btn">
+            <a href="../index.html#index"><i class="fa-regular fa-envelope"></i> Contact me</a>
+            </button>
+            <div class="bx bx-menu" id="menu-icon"></div>
+    </nav>
+    <main class="signin-container">
+        <h2>Sign In</h2>
+        <div class="form-container">
+            <form class="signin-form" id="loginForm">
+                <div class="input-item">
+                    <label for="email">Email</label>
+                    <input type="text" id="signinMail"/>
+                    <p class="error email-err"></p>
+                </div>
+                <div class="input-item">
+                    <label for="Password">Password</label>
+                    <input type="password" id="signinPass"/>
+                    <p class="error pass-err"></p>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <p>Don't have an account? <a href="./signup.html">Sign up</a></p>
+        </div>
+    </main>
+</section>
+<script src="../script/signin.js"></script>
+<script src="../script/app.js"></script>
+<script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
+</body>
+</html>

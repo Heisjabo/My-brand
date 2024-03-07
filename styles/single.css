@@ -1,0 +1,149 @@
+:root {
+    --bg-color: #131313;
+    --secondary-color: #40CF8E;
+    --text-color: #F2F2F2;
+    --special: #EDEDED;
+}
+.single-blog-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 10px 0;
+    margin: 0 auto;
+    width: 70%;
+}
+.single-blog-container img{
+    max-width: 100%;
+    border-radius: 5px;
+}
+.user{
+    color: red;
+}
+.blog-headers{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.blog-headers h2{
+    color: var(--special);
+    font-size: 32px;
+}
+.blog-stats{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+}
+.blog-stats button{
+    display: flex;
+    align-items: center;
+    color: var(--special);
+    background-color: transparent;
+    border: none;
+    gap: 10px;
+    font-size: 20px;
+}
+.subheader{
+    font-size: 24px;
+}
+
+.blog-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.comment-section{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 1px solid #2D2D2D;
+
+}
+
+.comment-section h3{
+    font-size: 20px;
+    font-weight: 400;
+    padding-top: 10px;
+}
+.comments-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.comment-item{
+    display: flex;
+    gap: 10px;
+}
+.comment-item img{
+    width: 50px;
+    height: 50px;
+    /* border-radius: 100%; */
+}
+.comment-text{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.comment-text h4{
+    font-size: 16px;
+}
+.comment-text .time{
+    color: #F2F2F2;
+    font-weight: 300;
+}
+
+.add-comment{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 10px;
+}
+
+.add-comment h3{
+    font-weight: 400;
+    font-size: 20px;
+
+}
+.add-comment form{
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    gap: 10px;
+}
+.add-comment form textarea{
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    resize: none;
+    padding: 10px 20px;
+    max-height: 100%;
+    color: var(--text-color);
+}
+.add-comment textarea:focus{
+    outline: none;
+}
+.add-comment button{
+    align-self: baseline;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1050px){
+    .single-blog-container{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .add-comment form{
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JABO | Signup </title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/signin.css">
+    <link rel="stylesheet"
+    href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <section id="signin">
+    <nav>
+        <h2>JABO.</h2>
+        <ul class="nav-list">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#skills">Skills</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#blogs">Blogs</a></li>
+            <li><a href="../screens/signin.html">Signin</a></li>
+        </ul>
+        <button class="contact-btn">
+            <a href="../index.html#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>
+            </button>
+            <div class="bx bx-menu" id="menu-icon"></div>
+    </nav>
+    <main class="signin-container">
+        <h2>Sign up</h2>
+        <div class="form-container">
+            <form class="signin-form" id="signup-form">
+                <div class="input-item">
+                    <label for="name">Fullname</label>
+                    <input type="text" id="fullname" />
+                    <p class="error fullname-err"></p>
+                </div>
+                <div class="input-item">
+                   <label for="email">Email</label>
+                    <input type="text" id="email"/>
+                    <p class="error email-err"></p>
+                </div>
+                <div class="input-item">
+                    <label for="Password">Password</label>
+                    <input type="password" id="password"/>
+                    <p class="error password-err"></p>
+                </div>
+                <div class="input-item">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" />
+                    <p class="error confirmPassword-err"></p>
+                </div>
+                <button type="submit">Signup</button>
+            </form>
+            <p>Already have an account? <a href="./signin.html">Sign in</a></p>
+        </div>
+    </main>
+</section>
+<script src="../script/signup.js"></script>
+<script src="../script/app.js"></script>
+<script src="https://kit.fontawesome.com/63e00a6191.js" crossorigin="anonymous"></script>
+</body>
+</html>

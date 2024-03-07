@@ -1,0 +1,81 @@
+:root {
+    --bg-color: #131313;
+    --secondary-color: #40CF8E;
+    --text-color: #F2F2F2;
+    --special: #EDEDED;
+}
+
+#signin{
+    position: relative;
+    height: 80vh;
+}
+.error{
+    color: red;
+    font-size: 14px;
+}
+
+.signin-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    justify-content: center;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.form-container{
+    background-color: #1C1C1C;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 20px;
+    border-radius: 5px;
+    width: 40%;
+}
+.form-container form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.input-item{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.input-item input{
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    padding: 5px 15px;
+    color: var(--text-color);
+}
+.input-item input:focus{
+    outline: none;
+}
+.form-container form button{
+    background-color: #034b2a;
+    border-radius: 5px;
+    color: var(--text-color);
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+/* .form-container button:hover{
+    transform: scale(0.99);
+} */
+.form-container a{
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+@media screen and (max-width: 600px) {
+    .form-container{
+        width: 90%;
+    }
+}
