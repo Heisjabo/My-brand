@@ -1,5 +1,11 @@
+document.addEventListener("DOMContentLoaded", () => {
+  fetchBlogs();
+})
+
 let menu = document.querySelector("#menu-icon");
 let navlist = document.querySelector(".nav-list");
+
+const BLOGS_URL = "https://mybrand-be-x023.onrender.com/api/v1/blogs"
 
 menu.onclick = () => {
   menu.classList.toggle("bx-x");
@@ -46,111 +52,104 @@ function myFunction() {
 
 // ====== displaying the blogs ========
 
-const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+let blogPosts;
 
-const blogsContainer = document.querySelector('.blogs-container');
+const loader = document.getElementById("loader-element");
 
-blogsContainer.innerHTML = '';
-
-blogPosts.forEach(blogPost => {
-  const blogCardDiv = document.createElement('div');
-  blogCardDiv.classList.add('blog-card');
-
-  const blogLink = document.createElement('a');
-  blogLink.href = `./screens/singleBlog.html?id=${blogPost.id}`;
-
-  const blogImage = document.createElement('img');
-  blogImage.src = blogPost.image;
-  blogImage.alt = blogPost.title;
-
-  const blogTextDiv = document.createElement('div');
-  blogTextDiv.classList.add('blog-text');
-
-  const blogTitleHeading = document.createElement('h3');
-  blogTitleHeading.textContent = blogPost.title;
-
-  const dateStatsDiv = document.createElement('div');
-  dateStatsDiv.classList.add('date-stats');
-
-  const dateParagraph = document.createElement('p');
-  dateParagraph.textContent = blogPost.date;
-
-  const likeButton = document.createElement('button');
-  likeButton.classList.add('like');
-  const likeIcon = `<i class="fa-regular fa-heart"></i>`
-  likeButton.innerHTML = `${blogPost.likes} ${likeIcon}`;
-  if(blogPost.liked){
-    likeButton.classList.add("blog-liked")
+const fetchBlogs = async () => {
+  try{
+    loader.style.display = "flex";
+    const response = await fetch(BLOGS_URL, {
+      method: "GET",
+    });
+    loader.style.display = "none"
+    const data = await response.json();
+    blogPosts = data.data;
+    console.log(blogPosts);
+    const blogIdOne = blogPosts[0]._id;
+    const likes = await getLikes(blogIdOne)
+    blogPosts.forEach(item => {
+      const blogsContainer = document.querySelector('.blogs-container');
+      // blogsContainer.innerHTML = '';
+      const blogHTML = `
+      <div class="blog-card">
+                <a href="./screens/singleBlog.html?id=${item._id}"><img alt="" src=${item.image} /></a>
+                <div class="blog-text">
+                    <h3>${item.title}</h3>
+                    <div class="date-stats">
+                        <p>Oct 9, 2023</p>
+                        <button class="like">12 <i class="fa-regular fa-heart"></i></button>
+                        <button class="like">10 <i class="fa-regular fa-comment"></i></button>
+                    </div>
+                    <p>
+                    <div>${item.description.slice(0, 20) + "..."}</div>
+                </div>
+            </div>
+      `;
+      blogsContainer.innerHTML += blogHTML;
+    });
+    slideBlogs();
+  } catch(err){
+    loader.style.display = "none";
+    console.log(err)
   }
-  likeButton.addEventListener('click', () => {
-    if (!blogPost.liked) {
-      blogPost.likes++;
-      blogPost.liked = true;
-      localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
-      likeButton.innerHTML = `${blogPost.likes} <i class="fa-regular fa-heart"></i>`;
-    }
-  });
+};
 
-  const commentButton = document.createElement('button');
-  commentButton.classList.add('like');
-  commentButton.innerHTML = `${blogPost.comments.length} <i class="fa-regular fa-comment"></i>`;
+fetch("https://mybrand-be-x023.onrender.com/api/v1/blogs/65f9aa6d3c4fd09e2022a223")
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(err => console.log(err));
 
-  const blogBodyParagraph = document.createElement('p');
-  blogBodyParagraph.textContent = blogPost.body.slice(0, 50) + "...";
 
-  dateStatsDiv.appendChild(dateParagraph);
-  dateStatsDiv.appendChild(likeButton);
-  dateStatsDiv.appendChild(commentButton);
-
-  blogTextDiv.appendChild(blogTitleHeading);
-  blogTextDiv.appendChild(dateStatsDiv);
-  blogTextDiv.appendChild(blogBodyParagraph);
-
-  blogLink.appendChild(blogImage);
-
-  blogCardDiv.appendChild(blogLink);
-  blogCardDiv.appendChild(blogTextDiv);
-
-  blogsContainer.appendChild(blogCardDiv);
-});
+const getLikes = async (blogId) => {
+  try{
+    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/likes`);
+    const data = await response.json();
+    const likes = await data.likes
+    console.log(likes)
+    return likes
+  } catch(err){
+    console.log("Error" + err)
+  }
+}
 
 // logged user tracking
 
-const user = JSON.parse(sessionStorage.getItem('user'));
+// const user = JSON.parse(sessionStorage.getItem('accessToken'));
 
 
-const navList = document.querySelector('.nav-list');
-const signInLink = document.querySelector('.nav-list a[href="./screens/signin.html"]');
-const contactBtn = document.querySelector('.contact-btn');
-const navbar = document.querySelector('nav')
+// const navList = document.querySelector('.nav-list');
+// const signInLink = document.querySelector('.nav-list a[href="./screens/signin.html"]');
+// const contactBtn = document.querySelector('.contact-btn');
+// const navbar = document.querySelector('nav')
 
-if (user) {
-  const avatar = document.createElement('div');
-  avatar.classList.add('avatar');
-  avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+// if (user) {
+//   const avatar = document.createElement('div');
+//   avatar.classList.add('avatar');
+//   // avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
 
-  signInLink.remove();
+//   signInLink.remove();
 
-  navbar.appendChild(avatar);
-  navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
-  contactBtn.remove()
+//   navbar.appendChild(avatar);
+//   navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
+//   contactBtn.remove()
 
-  const signOutLink = document.getElementById('signOut');
-  signOutLink.addEventListener('click', () => {
-    sessionStorage.removeItem('user');
-    location.reload();
-  });
-} else {
-  document.querySelector('.avatar').remove();
-  document.getElementById('signOut').remove();
-  navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
-}
+//   const signOutLink = document.getElementById('signOut');
+//   signOutLink.addEventListener('click', () => {
+//     sessionStorage.removeItem('user');
+//     location.reload();
+//   });
+// } else {
+//   document.querySelector('.avatar').remove();
+//   document.getElementById('signOut').remove();
+//   navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
+// }
 
-if (user) {
-  contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-} else {
-  contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-}
+// if (user) {
+//   contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+// } else {
+//   contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+// }
 
 // logged user tracking end
 
@@ -244,71 +243,12 @@ function validateForm() {
 }
 
 
-function slider() {
-  const container = document.querySelector(".projects-container");
-  const cards = document.querySelectorAll(".project-card");
-  const firstCard = cards[0];
-  const cardWidth =
-    firstCard.offsetWidth +
-    parseInt(window.getComputedStyle(firstCard).marginRight);
-
-  container.appendChild(firstCard.cloneNode(true));
-
-  let position = 0;
-
-  function slideLeft() {
-    position -= cardWidth;
-    container.style.transform = `translateX(${position}px)`;
-    container.style.transition = "transform 1s ease-in-out";
-
-    if (position <= -container.scrollWidth + cardWidth) {
-      setTimeout(() => {
-        position = 0;
-        container.style.transform = `translateX(${position}px)`;
-        container.style.transition = "none";
-      }, 1000);
-    }
-  }
-
-  setInterval(slideLeft, 5000);
-
-  const paginationContainer = document.createElement("div");
-  paginationContainer.classList.add("pagination-container");
-  container.parentNode.insertBefore(paginationContainer, container.nextSibling);
-
-  cards.forEach((card, index) => {
-    const paginationDot = document.createElement("span");
-    paginationDot.classList.add("pagination-dot");
-    paginationDot.addEventListener("click", () => {
-      position = -index * cardWidth;
-      container.style.transform = `translateX(${position}px)`;
-      container.style.transition = "transform 1s ease-in-out";
-    });
-    paginationContainer.appendChild(paginationDot);
-  });
-
-  function highlightPaginationDot() {
-    const activeIndex = Math.abs(position / cardWidth);
-    const paginationDots =
-      paginationContainer.querySelectorAll(".pagination-dot");
-    paginationDots.forEach((dot, index) => {
-      if (index === activeIndex) {
-        dot.classList.add("active");
-      } else {
-        dot.classList.remove("active");
-      }
-    });
-  }
-
-  window.addEventListener("load", highlightPaginationDot);
-  container.addEventListener("transitionend", highlightPaginationDot);
-}
-
-window.addEventListener("load", slider);
-
 function slideBlogs() {
   const container = document.querySelector(".blogs-container");
   const cards = document.querySelectorAll(".blog-card");
+  if (cards.length <= 3) {
+    return;
+  }
   const firstCard = cards[0];
   const cardWidth =
     firstCard.offsetWidth +
@@ -336,21 +276,26 @@ function slideBlogs() {
   paginationContainer.classList.add("pagination-container");
   container.parentNode.insertBefore(paginationContainer, container.nextSibling);
 
-  cards.forEach((card, index) => {
+  // Calculate the number of pagination dots needed
+  const numPaginationDots = cards.length;
+
+  for (let i = 0; i < numPaginationDots; i++) {
     const paginationDot = document.createElement("span");
     paginationDot.classList.add("pagination-dot");
+
+    // Add click event listener to each pagination dot
     paginationDot.addEventListener("click", () => {
-      position = -index * cardWidth;
+      position = -i * cardWidth;
       container.style.transform = `translateX(${position}px)`;
       container.style.transition = "transform 1s ease-in-out";
     });
+
     paginationContainer.appendChild(paginationDot);
-  });
+  }
 
   function highlightPaginationDot() {
     const activeIndex = Math.abs(position / cardWidth);
-    const paginationDots =
-      paginationContainer.querySelectorAll(".pagination-dot");
+    const paginationDots = paginationContainer.querySelectorAll(".pagination-dot");
     paginationDots.forEach((dot, index) => {
       if (index === activeIndex) {
         dot.classList.add("active");
@@ -363,4 +308,5 @@ function slideBlogs() {
   window.addEventListener("load", highlightPaginationDot);
   container.addEventListener("transitionend", highlightPaginationDot);
 }
-window.addEventListener("load", slideBlogs);
+
+// window.addEventListener("load", slideBlogs);

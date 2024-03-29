@@ -26,6 +26,12 @@
             </button>
             <div class="bx bx-menu" id="menu-icon"></div>
     </nav>
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-ok-button">OK</button>
+        </div>
+      </div>
     <main class="signin-container">
         <h2>Sign In</h2>
         <div class="form-container">
@@ -40,7 +46,7 @@
                     <input type="password" id="signinPass"/>
                     <p class="error pass-err"></p>
                 </div>
-                <button type="submit">Sign In</button>
+                <button type="submit" id="signin-btn">Sign In</button>
             </form>
             <p>Don't have an account? <a href="./signup.html">Sign up</a></p>
         </div>

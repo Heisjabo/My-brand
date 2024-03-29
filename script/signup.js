@@ -1,11 +1,40 @@
+const REGISTER_URL = "https://mybrand-be-x023.onrender.com/api/v1/users"
+
 const signUpForm = document.getElementById("signup-form");
+
+const validateUserEmail = () => {
+    const email = document.getElementById('email').value.trim();
+
+    if (email == "") {
+        document.querySelector('.email-err').innerHTML = "Email is required";
+        return false;
+    } else if (!email.match(regex)) {
+        document.querySelector('.email-err').innerHTML = "Please enter a valid email";
+        return false;
+    } else {
+        document.querySelector('.email-err').innerHTML = "";
+        return true;
+    }
+}
+
+const validateFullName = () => {
+    const fullName = document.getElementById('fullname').value.trim();
+
+    if (fullName == "") {
+        document.querySelector('.fullname-err').innerHTML = "Fullname is required";
+        return false;
+    } else {
+        document.querySelector('.fullname-err').innerHTML = "";
+        return true;
+    }
+}
 
 document.getElementById('fullname').addEventListener("input", () => {
     validateFullName();
 });
 
 document.getElementById('email').addEventListener("input", () => {
-    validateEmail();
+    validateUserEmail();
 });
 
 document.getElementById('password').addEventListener("input", () => {
@@ -23,32 +52,6 @@ signUpForm.addEventListener("submit", (e) => {
 
 let regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-const validateFullName = () => {
-    const fullName = document.getElementById('fullname').value.trim();
-
-    if (fullName == "") {
-        document.querySelector('.fullname-err').innerHTML = "Fullname is required";
-        return false;
-    } else {
-        document.querySelector('.fullname-err').innerHTML = "";
-        return true;
-    }
-}
-
-const validateEmail = () => {
-    const email = document.getElementById('email').value.trim();
-
-    if (email == "") {
-        document.querySelector('.email-err').innerHTML = "Email is required";
-        return false;
-    } else if (!email.match(regex)) {
-        document.querySelector('.email-err').innerHTML = "Please enter a valid email";
-        return false;
-    } else {
-        document.querySelector('.email-err').innerHTML = "";
-        return true;
-    }
-}
 
 const validatePassword = () => {
     const password = document.getElementById('password').value.trim();
@@ -87,41 +90,77 @@ const validateConfirmPassword = () => {
     }
 }
 
-const validateSignUp = () => {
+const popupContent = document.getElementById("popup-content");
+const openPopup = (message, success) => {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+  
+    popupMessage.innerHTML = message;
+    popup.style.display = "block";
+
+    const closeBtn  = document.getElementById("popup-ok-button");
+    closeBtn.addEventListener("click", () => {
+        if(success){
+            closePopupAndRedirect()
+        } else {
+            closePopup()
+        }
+    })
+  }
+  
+  const closePopup = () => {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    }
+
+  const closePopupAndRedirect = () => {
+    closePopup();
+    window.location.href = "./signin.html"
+  }
+
+const validateSignUp = async () => {
     const isValidFullName = validateFullName();
-    const isValidEmail = validateEmail();
+    const isValidEmail = validateUserEmail();
     const isValidPassword = validatePassword();
     const isValidConfirmPassword = validateConfirmPassword();
 
     if (isValidFullName && isValidEmail && isValidPassword && isValidConfirmPassword) {
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-
-        const fullName = document.getElementById('fullname').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
-
-        const existingUser = users.find(user => user.email === email);
-        if (existingUser) {
-            document.querySelector('.email-err').innerHTML = "Email already exists";
-            return;
-        }
+        const fullName = document.getElementById('fullname').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
         const user = {
-            fullName: fullName,
+            name: fullName,
             email: email,
             password: password,
-            role: 'user'
         };
 
-        users.push(user);
+        const signUpBtn = document.getElementById("signup-btn");
+        const originalButtonText = signUpBtn.textContent;
 
-        localStorage.setItem('users', JSON.stringify(users));
-
-        alert('Account was created successfully.');
-
-        document.getElementById('fullname').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('confirmPassword').value = '';
+        try{
+            signUpBtn.textContent = "Loading...";
+            const response = await fetch(REGISTER_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user)
+            },
+            );
+            signUpBtn.textContent = originalButtonText
+            if (response.ok) {
+                const data = await response.json();
+                popupContent.style.color = "#40CF8E"
+                openPopup("Your account was created successfully", true);
+              } else {
+                const errorData = await response.json();
+                popupContent.style.color = "red"
+                openPopup(`Error:  ${errorData.message}`, false);
+              }
+        } catch(err){
+            signUpBtn.textContent = originalButtonText
+            console.log(err)
+            popupContent.style.color = "red"
+            openPopup("An error occurred. Please try again later.", false); 
+        }
     }
 }

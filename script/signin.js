@@ -3,6 +3,8 @@ const signPass = document.getElementById('signinPass');
 const loginForm = document.querySelector('#loginForm');
 let mailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+const LOGIN_URL = "https://mybrand-be-x023.onrender.com/api/v1/users/auth"
+
 
 signMail.addEventListener('input', () => {
     validateEmail();
@@ -54,28 +56,78 @@ const validatePassword = () => {
     }
 }
 
-const validateSignIn = () => {
+const popupContent = document.getElementById("popup-content");
+const openPopup = (message, success) => {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+  
+    popupMessage.innerHTML = message;
+    popup.style.display = "block";
+
+    const closeBtn  = document.getElementById("popup-ok-button");
+    closeBtn.addEventListener("click", () => {
+        if(success){
+            closePopupAndRedirect()
+        } else {
+            closePopup()
+        }
+    })
+  }
+  
+  const closePopup = () => {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+    }
+
+let userRole;
+
+  const closePopupAndRedirect = () => {
+    closePopup();
+    if(userRole === "admin"){
+        window.location.href = '../admin_panel/admin.html'
+    } else{
+        window.location.href = '/'
+    }
+  }
+
+const signinBtn = document.getElementById("signin-btn");
+const buttonText = signinBtn.textContent;
+
+const validateSignIn = async () => {
     const isValidEmail = validateEmail();
     const isValidPassword = validatePassword();
 
     if (isValidEmail && isValidPassword) {
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-  
-        const email = signMail.value.trim();
-        const password = signPass.value.trim();
+        const email = signMail.value;
+        const password = signPass.value;
 
-        const user = users.find(user => user.email === email && user.password === password);
-        if (!user) {
-            document.querySelector('.email-err').innerHTML = "Invalid email or password";
-            return;
-        }
-
-        sessionStorage.setItem('user', JSON.stringify(user));
-
-        if (user.role === 'user') {
-            window.location.href = '/';
-        } else if (user.role === 'admin') {
-            window.location.href = '/admin_panel/admin.html';
+        try{
+            signinBtn.textContent = "Loading..."
+            const response = await fetch(LOGIN_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            signinBtn.textContent = buttonText
+            const data = await response.json()
+            if(response.ok){
+                popupContent.style.color = "#40CF8E"
+                sessionStorage.setItem("accessToken", data.token);
+                userRole = data.role;
+                localStorage.setItem("userRole", userRole)
+                openPopup(`Success: ${data.message}`, true)
+            } else {
+                popupContent.style.color = "red"
+                openPopup(`Error: ${data.message}`, false)
+            }
+            console.log(data);
+        } catch(err){
+            signinBtn.textContent = buttonText
+            console.log(err)
+            popupContent.style.color = "red"
+            openPopup(`Error: ${err.message}`, false)
         }
     }
 }

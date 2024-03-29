@@ -128,7 +128,7 @@
 }
 .add-comment button{
     align-self: baseline;
-    background-color: var(--secondary-color);
+    background-color: #034b2a;
     color: var(--text-color);
     border: none;
     padding: 10px 20px;
