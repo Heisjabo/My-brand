@@ -1,6 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  fetchBlogs();
-})
 
 let menu = document.querySelector("#menu-icon");
 let navlist = document.querySelector(".nav-list");
@@ -48,13 +45,39 @@ function myFunction() {
 })();
 
 
-
+document.addEventListener("DOMContentLoaded", () => {
+  fetchBlogs();
+  fetchUser()
+})
 
 // ====== displaying the blogs ========
 
 let blogPosts;
 
 const loader = document.getElementById("loader-element");
+
+const checkUserLiked = async (id) => {
+  let authorization = sessionStorage.getItem("accessToken")
+  try {
+    if (!authorization) {
+      return false;
+    }
+    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${id}/likes`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    console.log(data);
+    for (const like of data.data) {
+      if (like.user === userId) {
+        return true;
+      }
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
 
 const fetchBlogs = async () => {
   try{
@@ -66,11 +89,11 @@ const fetchBlogs = async () => {
     const data = await response.json();
     blogPosts = data.data;
     console.log(blogPosts);
-    const blogIdOne = blogPosts[0]._id;
-    const likes = await getLikes(blogIdOne)
-    blogPosts.forEach(item => {
+    blogPosts.forEach( async (item) => {
       const blogsContainer = document.querySelector('.blogs-container');
-      // blogsContainer.innerHTML = '';
+      const likes = await getLikes(item._id);
+      const comments = await getComments(item._id);
+      let isLiked = await checkUserLiked(item._id);
       const blogHTML = `
       <div class="blog-card">
                 <a href="./screens/singleBlog.html?id=${item._id}"><img alt="" src=${item.image} /></a>
@@ -78,8 +101,8 @@ const fetchBlogs = async () => {
                     <h3>${item.title}</h3>
                     <div class="date-stats">
                         <p>Oct 9, 2023</p>
-                        <button class="like">12 <i class="fa-regular fa-heart"></i></button>
-                        <button class="like">10 <i class="fa-regular fa-comment"></i></button>
+                        <button class="like">${likes} <i class="fa-regular fa-heart ${isLiked ? "liked" : ""}"></i></button>
+                        <button class="like">${comments} <i class="fa-regular fa-comment"></i></button>
                     </div>
                     <p>
                     <div>${item.description.slice(0, 20) + "..."}</div>
@@ -95,65 +118,101 @@ const fetchBlogs = async () => {
   }
 };
 
-fetch("https://mybrand-be-x023.onrender.com/api/v1/blogs/65f9aa6d3c4fd09e2022a223")
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(err => console.log(err));
-
-
 const getLikes = async (blogId) => {
   try{
     const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/likes`);
     const data = await response.json();
     const likes = await data.likes
-    console.log(likes)
     return likes
   } catch(err){
     console.log("Error" + err)
   }
 }
 
+const getComments = async (blogId) => {
+  try{
+    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/comments`);
+    const data = await response.json();
+    return data.comments
+  } catch(err){
+    console.log(err)
+  }
+}
+
+const accesssToken = sessionStorage.getItem("accessToken");
+
+function decodeJwt(token) {
+  if(token){
+    const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+  } 
+}
+const decoded = decodeJwt(accesssToken);
+const userId = decoded.userId;
+
+const fetchUser = async () => {
+  try{
+    const res = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/users/${userId}`);
+    const data = await res.json();
+    const loggedUser = data.data;
+    trackLoggedUser(loggedUser)
+  } catch(err){
+    console.log(err)
+  }
+}
+
+
+
 // logged user tracking
 
-// const user = JSON.parse(sessionStorage.getItem('accessToken'));
 
+const navList = document.querySelector('.nav-list');
+const signInLink = document.querySelector('.nav-list a[href="./screens/signin.html"]');
+const contactBtn = document.querySelector('.contact-btn');
+const navbar = document.querySelector('nav')
 
-// const navList = document.querySelector('.nav-list');
-// const signInLink = document.querySelector('.nav-list a[href="./screens/signin.html"]');
-// const contactBtn = document.querySelector('.contact-btn');
-// const navbar = document.querySelector('nav')
+const trackLoggedUser = async (user) => {
+  if (user) {
+    const avatarContainer = document.createElement('div');
+    avatarContainer.classList.add('avatar-container');
 
-// if (user) {
-//   const avatar = document.createElement('div');
-//   avatar.classList.add('avatar');
-//   // avatar.textContent = user.fullName.split(' ').map(name => name[0]).join('').toUpperCase();
+    const avatar = document.createElement('div');
+    avatar.classList.add('avatar');
+    avatar.textContent = user.name.split(' ').map(name => name[0]).join('').toUpperCase();
+  
+    const signOutLink = document.createElement('a');
+    signOutLink.setAttribute('href', '#');
+    signOutLink.textContent = 'Logout';
+    signOutLink.id = 'signOut';
+    signOutLink.addEventListener('click', () => {
+      sessionStorage.removeItem('accessToken');
+      window.location.href = "./screens/signin.html";
+    });
+    
+    avatarContainer.appendChild(avatar);
+    avatarContainer.appendChild(signOutLink);
 
-//   signInLink.remove();
-
-//   navbar.appendChild(avatar);
-//   navList.innerHTML += '<li><a href="#" id="signOut">SignOut</a></li>';
-//   contactBtn.remove()
-
-//   const signOutLink = document.getElementById('signOut');
-//   signOutLink.addEventListener('click', () => {
-//     sessionStorage.removeItem('user');
-//     location.reload();
-//   });
-// } else {
-//   document.querySelector('.avatar').remove();
-//   document.getElementById('signOut').remove();
-//   navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
-// }
-
-// if (user) {
-//   contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-// } else {
-//   contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
-// }
+    signInLink.remove();
+    navbar.appendChild(avatarContainer);
+    contactBtn.remove();
+  } else {
+    document.querySelector('.avatar-container').remove();
+    navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
+  }
+  
+  if (user) {
+    contactBtn.innerHTML = '<a href="#contact"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+  } else {
+    contactBtn.innerHTML = '<a href="./screens/signin.html"><i class="fa-regular fa-envelope"></i> Contact me</a>';
+  }
+}
 
 // logged user tracking end
-
-
 
 //  contact me form
 
@@ -224,21 +283,57 @@ function validateMessage() {
   }
 }
 
-function validateForm() {
+const popupContent = document.getElementById("popup-content");
+const openPopup = (message) => {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+  
+    popupMessage.innerHTML = message;
+    popup.style.display = "block";
+
+    const closeBtn  = document.getElementById("popup-ok-button");
+    closeBtn.addEventListener("click", () => {
+            closePopup()
+    })
+  }
+  
+  const closePopup = () => {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+}
+
+const sendBtn = document.getElementById("sent-message")
+
+async function validateForm() {
   const isValidName = validateName();
   const isValidEmail = validateEmail();
   const isValidMessage = validateMessage();
 
   if (isValidName && isValidEmail && isValidMessage) {
-    const formData = JSON.parse(localStorage.getItem("messages")) || [];
-    formData.push({
+    const formData = {
       name: name.value,
       email: email.value,
       message: message.value,
-    });
-    localStorage.setItem("messages", JSON.stringify(formData));
-    alert("your message was sent successfully!");
-    form.reset();
+    }
+    try{
+      sendBtn.textContent = "Loading..."
+      const response = await fetch("https://mybrand-be-x023.onrender.com/api/v1/queries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json()
+      console.log(data)
+      sendBtn.textContent = "Send Message"
+      openPopup(`${data.message}`)
+      // alert("your message was sent successfully!")
+      form.reset()
+    } catch(err){
+      sendBtn.textContent = "Send Message"
+      console.log(err)
+    }
   }
 }
 
@@ -246,7 +341,7 @@ function validateForm() {
 function slideBlogs() {
   const container = document.querySelector(".blogs-container");
   const cards = document.querySelectorAll(".blog-card");
-  if (cards.length <= 3) {
+  if (cards <= 1 || (window.innerWidth > 768 && cards <= 3)) {
     return;
   }
   const firstCard = cards[0];
@@ -309,4 +404,3 @@ function slideBlogs() {
   container.addEventListener("transitionend", highlightPaginationDot);
 }
 
-// window.addEventListener("load", slideBlogs);

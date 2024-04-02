@@ -111,7 +111,7 @@ const openPopup = (message, success) => {
   const closePopup = () => {
       const popup = document.getElementById("popup");
       popup.style.display = "none";
-    }
+}
 
   const closePopupAndRedirect = () => {
     closePopup();

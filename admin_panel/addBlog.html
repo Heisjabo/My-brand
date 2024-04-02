@@ -11,10 +11,16 @@
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body>
+  <div id="popup" class="popup">
+    <div class="popup-content" id="popup-content">
+        <p id="popup-message"></p>
+        <button id="popup-ok-button">OK</button>
+    </div>
+  </div> 
   <div class="wrapper">
     <div class="side-container" id="side-bar">
       <div class="logo">
-        <h1>JABO.</h1>
+        <h1><a href="/">JABO.</a></h1>
         <i class="fa-solid fa-x menu-close"></i>
       </div>
       <ul class="nav">
@@ -67,6 +73,7 @@
       </div>
     </div>
   </div>
+  
   <section class="dashboard-home">
     <div class="addblog-container">
       <h1>Add a new Blog</h1>
@@ -87,7 +94,7 @@
           </div>
         </div>
         <p class="error body-err"></p>
-        <button type="submit">Add Blog</button>
+        <button type="submit" id="add-button">Add Blog</button>
       </form>
     </div>
   </section>

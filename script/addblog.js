@@ -9,7 +9,29 @@ addBlogForm.addEventListener("submit", (e) => {
   validateAndSubmit();
 });
 
-const validateAndSubmit = () => {
+const token = sessionStorage.getItem("accessToken");
+const addBtn = document.getElementById("add-button");
+
+const popupContent = document.getElementById("popup-content");
+const openPopup = (messageText) => {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+  
+    popupMessage.innerHTML = messageText;
+    popup.style.display = "block";
+
+    const closeBtn  = document.getElementById("popup-ok-button");
+    closeBtn.addEventListener("click", () => {
+        closePopup()
+    })
+  }
+  
+  const closePopup = () => {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+}
+
+const validateAndSubmit = async () => {
   const title = document.getElementById('title').value.trim();
   const image = document.getElementById('image').files[0];
   const body = quill.getText().trim(); 
@@ -34,41 +56,32 @@ const validateAndSubmit = () => {
 
   if (title && image && body) {
       const formData = new FormData();
-      formData.append('title', title);
-      formData.append('image', image);
-      formData.append('body', body);
+      formData.append("title", document.getElementById('title').value);
+      formData.append("description", quill.getText());
+      formData.append("image", image)
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const blogPost = {
-          id: generateUniqueId(),
-          title: document.getElementById('title').value,
-          image: e.target.result,
-          body: quill.getText(),
-          date: new Date().toLocaleString(),
-          likes: 0,
-          comments: []
-        };
-
-        const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-        blogPosts.push(blogPost);
-        localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
-
-        const img = document.createElement('img');
-        img.src = e.target.result;
-
-        alert("Blog created successfully!");
+      try{
+        addBtn.textContent = "Loading..."
+        const response = await fetch("https://mybrand-be-x023.onrender.com/api/v1/blogs", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
+          body: formData
+        });
+        addBtn.textContent = "Add Blog"
+        const data = await response.json();
+        console.log(data)
+        openPopup("Blog created successfully!");
         addBlogForm.reset();
         quill.setText("")
-
+      } catch(err){
+        addBtn.textContent = "Add Blog"
+        console.log(err)
+      }
       };
-      reader.readAsDataURL(image);
-  }
 }
 
-function generateUniqueId() {
-    return '' + Math.random().toString(36).substr(2, 9);
-}
 
 function likeBlogPost(blogId) {
   const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];

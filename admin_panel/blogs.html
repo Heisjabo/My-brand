@@ -13,10 +13,27 @@
 </head>
 
 <body>
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p id="confirmationMessage">Are you sure you want to delete this blog post?</p>
+      <div class="modal-actions">
+        <button id="confirmDeleteBtn">Yes</button>
+        <button id="cancelDeleteBtn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="popup" class="popup">
+    <div class="popup-content" id="popup-content">
+        <p id="popup-message"></p>
+        <button id="popup-ok-button">OK</button>
+    </div>
+  </div> 
+  
   <div class="wrapper">
     <div class="side-container" id="side-bar">
       <div class="logo">
-        <h1>JABO.</h1>
+        <h1><a href="/">JABO.</a></h1>
         <i class="fa-solid fa-x menu-close"></i>
       </div>
       <ul class="nav">
@@ -73,7 +90,12 @@
   <section class="dashboard-home">
     <div class="blogs-container">
       <h1>My Blogs</h1>
+      <div id="blogs-loader" class="container-loader">
+        <p>Loading blogs...</p>
+        <div id="loader" class="query-loader"></div>
+    </div>
       <table class="blogs-table">
+        
         <!-- <tr>
           <th>Title</th>
           <th>Author</th>
@@ -129,7 +151,7 @@
               <label for="body">Body</label>
               <div id="editor"></div>
             </div>
-            <button type="submit">Update Blog</button>
+            <button type="submit" id="update-button">Update Blog</button>
           </form>
         </div>
       </div>

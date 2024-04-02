@@ -11,9 +11,15 @@
 </head>
 
 <body>
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-ok-button">OK</button>
+        </div>
+      </div>
     <section id="home">
         <nav>
-            <h2>JABO.</h2>
+            <h2><a href="/">JABO.</a></h2>
             <ul class="nav-list">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -176,7 +182,7 @@
                     <textarea placeholder="Your message" id="message"></textarea>
                     <p id="msg-err"></p>
                 </div>
-                <button type="submit">Send Message</button>
+                <button type="submit" id="sent-message">Send Message</button>
             </form>
         </div>
     </section>
