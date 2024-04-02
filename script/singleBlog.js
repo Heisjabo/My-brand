@@ -37,6 +37,44 @@ function myFunction() {
 }
 
 
+const accesssToken = sessionStorage.getItem("accessToken");
+
+function decodeJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
+const decoded = decodeJwt(accesssToken);
+const userId = decoded.userId;
+console.log(userId)
+
+
+const checkUserLikedBlog = async () => {
+  try {
+    if (!accesssToken) {
+      return false;
+    }
+    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/likes`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    console.log(data);
+    for (const like of data.data) {
+      if (like.user === userId) {
+        return true;
+      }
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
 
 // logged user tracking end
 
@@ -218,44 +256,6 @@ commentForm.addEventListener('submit', async (e) => {
   }
 });
 
-const accesssToken = sessionStorage.getItem("accessToken");
-
-function decodeJwt(token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload);
-}
-
-const decoded = decodeJwt(accesssToken);
-const userId = decoded.userId;
-console.log(userId)
-
-
-const checkUserLikedBlog = async () => {
-  try {
-    if (!accesssToken) {
-      return false;
-    }
-    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/likes`, {
-      method: "GET",
-    });
-    const data = await response.json();
-    console.log(data);
-    for (const like of data.data) {
-      if (like.user === userId) {
-        return true;
-      }
-    }
-    return false;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
 
 
 // logged user tracking
