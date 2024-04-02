@@ -197,7 +197,7 @@ const trackLoggedUser = async (user) => {
     avatarContainer.appendChild(avatar);
     avatarContainer.appendChild(signOutLink);
 
-    signInLink.remove();
+    signInLink?.remove();
     navbar.appendChild(avatarContainer);
     contactBtn.remove();
   } else {

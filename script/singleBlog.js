@@ -221,9 +221,12 @@ function decodeJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+let decoded;
+if(accesssToken){
+  decoded = decodeJwt(accesssToken);
+}
 
-const decoded = decodeJwt(accesssToken);
-const userId = decoded.userId;
+const userId = decoded?.userId;
 console.log(userId)
 
 
