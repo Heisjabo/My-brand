@@ -13,7 +13,7 @@
 
 <body>
     <nav>
-        <h2>JABO.</h2>
+        <h2><a href="/">JABO.</a></h2>
         <ul class="nav-list">
             <li><a href="../index.html">Home</a></li>
             <li><a href="../index.html#about">About</a></li>
@@ -27,8 +27,18 @@
         </button>
         <div class="bx bx-menu" id="menu-icon"></div>
     </nav>
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-ok-button">OK</button>
+        </div>
+    </div>
     <main class="single-blog-container">
-        <img alt="blog image" src="../assets/img1.jpg" />
+        <div id="loader-element" class="container-loader">
+            <p>Loading content...</p>
+            <div id="loader" class="loader"></div>
+        </div>
+        <img />
         <div class="blog-info-container">
             <div class="blog-headers">
                 <h2 class="blog-title"></h2>
@@ -90,7 +100,7 @@
                 <h3>Leave a comment</h3>
                 <form>
                     <textarea placeholder="Enter your comment"></textarea>
-                    <button type="submit">Submit</button>
+                    <button type="submit" id="submit-comment">Submit</button>
                 </form>
             </div>
 

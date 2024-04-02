@@ -11,9 +11,15 @@
 </head>
 
 <body>
+    <div id="popup" class="popup">
+        <div class="popup-content" id="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-ok-button">OK</button>
+        </div>
+      </div>
     <section id="home">
         <nav>
-            <h2>JABO.</h2>
+            <h2><a href="/">JABO.</a></h2>
             <ul class="nav-list">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -129,46 +135,12 @@
     </section>
     <section id="blogs" class="section">
         <h2>Some of my writings</h2>
+        <div id="loader-element" class="container-loader">
+            <p>Loading blogs...</p>
+            <div id="loader" class="loader"></div>
+        </div>
         <div class="blogs-container">
-            <!-- <div class="blog-card">
-                <a href="./screens/singleBlog.html"><img alt="" src="./assets/img1.jpg" /></a>
-                <div class="bog-text">
-                    <h3>Boost Your Productivity with Version Control</h3>
-                    <div class="date-stats">
-                        <p>Oct 9, 2023</p>
-                        <button class="like">12 <i class="fa-regular fa-heart"></i></button>
-                        <button class="like">10 <i class="fa-regular fa-comment"></i></button>
-                    </div>
-                    <p>
-                    <p>Simplify Your Code Management with Practical Tips and Tools.</p>
-                </div>
-            </div>
-            <div class="blog-card">
-                <a href="./screens/singleBlog.html"><img alt="" src="./assets/img4.jpg" /></a>
-                <div class="bog-text">
-                    <h3>Boost Your Productivity with Version Control</h3>
-                    <div class="date-stats">
-                        <p>Oct 9, 2023</p>
-                        <button class="like">12 <i class="fa-regular fa-heart"></i></button>
-                        <button class="like">10 <i class="fa-regular fa-comment"></i></button>
-                    </div>
-                    <p>
-                    <p>Simplify Your Code Management with Practical Tips and Tools.</p>
-                </div>
-            </div> -->
-            <div class="blog-card">
-                <a href="./screens/singleBlog.html"><img alt="" src="./assets/img3.jpg" /></a>
-                <div class="bog-text">
-                    <h3>Boost Your Productivity with Version Control</h3>
-                    <div class="date-stats">
-                        <p>Oct 9, 2023</p>
-                        <button class="like">12 <i class="fa-regular fa-heart"></i></button>
-                        <button class="like">10 <i class="fa-regular fa-comment"></i></button>
-                    </div>
-                    <p>
-                    <p>Simplify Your Code Management with Practical Tips and Tools.</p>
-                </div>
-            </div> 
+            
         </div>
     </section>
     <section id="contact" class="section">
@@ -210,7 +182,7 @@
                     <textarea placeholder="Your message" id="message"></textarea>
                     <p id="msg-err"></p>
                 </div>
-                <button type="submit">Send Message</button>
+                <button type="submit" id="sent-message">Send Message</button>
             </form>
         </div>
     </section>

@@ -1,4 +1,66 @@
-const blogPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
+const sideMenu = document.getElementById('side-bar');
+let menuBtn = document.getElementById('menu');
+const closeMenu = document.querySelector('.menu-close');
+let profile = document.querySelector('.dashboard-profile');
+let avatar = document.querySelector('.avatar');
+
+menuBtn.onclick = () => {
+	sideMenu.classList.toggle('side-open');
+};
+
+closeMenu.onclick = () => {
+  sideMenu.classList.remove('side-open');
+};
+
+avatar.onclick = () => {
+    profile.classList.toggle('profile-open');
+}
+
+const confirmationModal = document.getElementById('confirmationModal');
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+const popupContent = document.getElementById("popup-content");
+const openPopup = (messageText) => {
+    const popup = document.getElementById("popup");
+    const popupMessage = document.getElementById("popup-message");
+  
+    popupMessage.innerHTML = messageText;
+    popup.style.display = "block";
+
+    const closeBtn  = document.getElementById("popup-ok-button");
+    closeBtn.addEventListener("click", () => {
+        closePopup()
+    })
+  }
+  
+  const closePopup = () => {
+      const popup = document.getElementById("popup");
+      popup.style.display = "none";
+      window.location.reload()
+}
+
+function openConfirmationModal(message, callback) {
+  document.getElementById('confirmationMessage').textContent = message;
+  confirmationModal.style.display = 'block';
+
+  confirmDeleteBtn.onclick = function() {
+    callback(true);
+    confirmationModal.style.display = 'none';
+  };
+
+  cancelDeleteBtn.onclick = function() {
+    callback(false);
+    confirmationModal.style.display = 'none';
+  };
+}
+
+function closeConfirmationModal() {
+  confirmationModal.style.display = 'none';
+}
+
+let blogs;
+
 
 const table = document.querySelector(".blogs-table");
 
@@ -9,55 +71,95 @@ headerRow.innerHTML = `
   <th>Date</th>
   <th>Actions</th>
 `;
-table.appendChild(headerRow);
 
-blogPosts.forEach((blogPost) => {
-  const row = document.createElement("tr");
 
-  row.innerHTML = `
-    <td>${blogPost.title}</td>
-    <td>${blogPost.body.slice(0, 10) + "..."}</td>
-    <td>${blogPost.date}</td>
-    <td class="actions">
-      <i class="fa-regular fa-pen-to-square edit" data-id="${blogPost.id}"></i>
-      <i class="fa-solid fa-trash delete" data-id="${blogPost.id}"></i>
-    </td>
-  `;
 
-  table.appendChild(row);
-});
+const fetchBlogs = async () => {
+  // table.style.display = "none"
+  const loader = document.getElementById("blogs-loader");
+  try{
+    loader.style.display = "flex"
+    const response = await fetch("https://mybrand-be-x023.onrender.com/api/v1/blogs")
+    loader.style.display = "none"
+    // table.style.display = "block"
+    const data = await response.json();
+    blogs = await data.data
+    console.log(blogs)
+    table.appendChild(headerRow);
+    
+    blogs.forEach((blogPost) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${blogPost.title}</td>
+        <td>${blogPost.description.slice(0, 10) + "..."}</td>
+        <td>12/03/2024</td>
+        <td class="actions">
+          <i class="fa-regular fa-pen-to-square edit" data-id="${blogPost._id}"></i>
+          <i class="fa-solid fa-trash delete" data-id="${blogPost._id}"></i>
+        </td>
+      `;
+      
+      table.appendChild(row);
 
-document.querySelectorAll(".delete").forEach((button) => {
+      document.querySelectorAll(".delete").forEach((button) => {
+        button.addEventListener("click", function () {
+          const id = this.getAttribute("data-id");
+          openConfirmationModal("Are you sure you want to delete this blog post?", function(confirmed){
+            if (confirmed) {
+              deleteBlog(id);
+            }
+          });
+        });
+      });
+    });
+
+    let blogPost;
+
+document.querySelectorAll(".edit").forEach((button) => {
   button.addEventListener("click", function () {
     const id = this.getAttribute("data-id");
-    const confirmDelete = confirm(
-      "Are you sure you want to delete this blog post?"
+    modal.style.display = "block";
+    blogPost = blogs.find(
+      (blog) => blog._id === id
     );
-    if (confirmDelete) {
-      const index = blogPosts.findIndex((blogPost) => blogPost.id === id);
-      if (index !== -1) {
-        blogPosts.splice(index, 1);
-        localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-        window.location.reload();
-        table.innerHTML = "";
-        table.appendChild(headerRow);
-        blogPosts.forEach((blogPost) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-              <td>${blogPost.title}</td>
-              <td>Jabo</td>
-              <td>${blogPost.date}</td>
-              <td class="actions">
-                <i class="fa-regular fa-pen-to-square edit" data-id="${blogPost.id}"></i>
-                <i class="fa-solid fa-trash delete" data-id="${blogPost.id}"></i>
-              </td>
-            `;
-          table.appendChild(row);
-        });
-      }
-    }
+    document.getElementById("title").value = blogPost.title;
+    document.getElementById("image").files[0] = blogPost.image;
+    quill.setText(blogPost.description);
+
+    document.querySelector(".edit-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      editBlog(id)
+    });
   });
+  
 });
+  } catch(err){
+    loader.style.display = "none"
+    console.log(err)
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchBlogs()
+})
+
+let authorization = sessionStorage.getItem("accessToken");
+
+const deleteBlog = async (id) => {
+  try{
+    const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${authorization}`
+      }
+    });
+    window.location.reload()
+  } catch(err){
+    console.log(err)
+  }
+} 
+
+
 
 const span = document.getElementsByClassName("close")[0];
 const modal = document.getElementById("editModal");
@@ -72,87 +174,66 @@ window.onclick = function (event) {
   }
 };
 
-let blogPost;
-
-document.querySelectorAll(".edit").forEach((button) => {
-  button.addEventListener("click", function () {
-    const id = this.getAttribute("data-id");
-    modal.style.display = "block";
-    blogPost = JSON.parse(localStorage.getItem("blogPosts")).find(
-      (post) => post.id === id
-    );
-    document.getElementById("title").value = blogPost.title;
-    document.getElementById("image").files[0] = blogPost.image;
-    quill.setText(blogPost.body);
-  });
-});
-
-let isChanged = false;
-let newImage;
-
-document.getElementById("title").addEventListener("input", function () {
-  isChanged = true;
-  updateButtonState();
-});
-
-document.getElementById("image").addEventListener("change", function (e) {
-  isChanged = true;
-  updateButtonState();
-  newImage = e.target.files[0];
-});
-
-quill.on("text-change", function () {
-  isChanged = true;
-  updateButtonState();
-});
 
 
-document.querySelector(".edit-form").addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const title = document.getElementById("title").value.trim();
-  const body = quill.getText().trim();
+// let isChanged = false;
+// let newImage;
 
-  if (title && body) {
-    const update = {
-      id: blogPost.id,
-      title: document.getElementById("title").value,
-      image: newImage ? await readFile(newImage) : blogPost.image,
-      body: quill.getText(),
-      date: new Date().toLocaleString(),
-      likes: blogPost.likes,
-      comments: blogPost.comments,
-    };
+// document.getElementById("title").addEventListener("input", function () {
+//   isChanged = true;
+//   updateButtonState();
+// });
 
-    const index = blogPosts.findIndex((post) => post.id === blogPost.id);
-    if (index !== -1) {
-      blogPosts[index] = update;
-      localStorage.setItem("blogPosts", JSON.stringify(blogPosts));
-      alert("blog was updated successfully!");
-      modal.style.display = "none";
-      window.location.href = `/screens/singleBlog.html?id=${blogPost.id}`
+// document.getElementById("image").addEventListener("change", function (e) {
+//   isChanged = true;
+//   updateButtonState();
+//   newImage = e.target.files[0];
+// });
 
-    }
-  }
-});
+// quill.on("text-change", function () {
+//   isChanged = true;
+//   updateButtonState();
+// });
 
-async function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
+const upButton = document.getElementById("update-button");
+const originalButton = upButton.textContent;
+
+const editBlog = async (id) => {
+  const title = document.getElementById("title").value;
+const image = document.getElementById("image").files[0];
+const body = quill.getText();
+
+const formData = new FormData()
+
+if (title){
+  formData.append("title", title)
+}
+if(body){
+  formData.append("description", body)
+}
+if(image){
+  formData.append("image", image)
 }
 
-
-function updateButtonState() {
-  const updateButton = document.querySelector(".edit-form button[type='submit']");
-  if (isChanged) {
-    updateButton.removeAttribute("disabled");
-  } else {
-    updateButton.setAttribute("disabled", "disabled");
-  }
+try{
+  upButton.textContent = "Loading..."
+  const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${authorization}`
+    },
+    body: formData
+  });
+  upButton.textContent = originalButton
+  const data = await response.json()
+  console.log(data)
+  openPopup(`${data.message}`)
+} catch(err){
+  upButton.textContent = originalButton
+  console.log(err)
 }
+}
+
 
 
 
