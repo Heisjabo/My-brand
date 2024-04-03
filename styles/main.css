@@ -323,15 +323,16 @@ nav .contact-btn {
     width: 90%;
     gap: 10px;
     margin: 0 auto;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .blogs-container {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-    margin-top: 2rem;
-    width: 100%;
+    display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(350px, auto));
+	/* align-items: center; */
+    justify-content: flex-start;
+	gap: 20px;
+	margin-top: 1rem;
 }
 
 .blog-card {
@@ -341,8 +342,9 @@ nav .contact-btn {
     border-radius: 5px;
     position: relative;
     transition: transform 0.5s;
-    flex: 0 0 33.33%;
-    box-sizing: border-box;
+    /* flex: 0 0 33.33%; */
+    grid-auto-flow: column;
+    /* box-sizing: border-box; */
 }
 
 .blog-card img {

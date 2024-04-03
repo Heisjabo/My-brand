@@ -67,9 +67,7 @@ blogStats.innerHTML = `
   <button class="comment">${ await fetchComments()} <i class="fa-regular fa-comment"></i></button>
 `;
 
-blogContent.innerHTML = `
-  <p>${blogPost.description}</p>
-`;
+blogContent.innerHTML = blogPost.description
   } catch(err){
     loader.style.display = "none"
     console.log(err)
