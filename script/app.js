@@ -105,13 +105,13 @@ const fetchBlogs = async () => {
                         <button class="like">${comments} <i class="fa-regular fa-comment"></i></button>
                     </div>
                     <p>
-                    <div>${item.description.slice(0, 20) + "..."}</div>
+                    <div>${item.description.slice(0, 50) + "..."}</div>
                 </div>
             </div>
       `;
       blogsContainer.innerHTML += blogHTML;
     });
-    slideBlogs();
+    // slideBlogs();
   } catch(err){
     loader.style.display = "none";
     console.log(err)
@@ -197,7 +197,7 @@ const trackLoggedUser = async (user) => {
     avatarContainer.appendChild(avatar);
     avatarContainer.appendChild(signOutLink);
 
-    signInLink.remove();
+    signInLink?.remove();
     navbar.appendChild(avatarContainer);
     contactBtn.remove();
   } else {

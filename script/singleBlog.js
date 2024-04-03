@@ -1,11 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  fetchBlog()
-  fetchComments()
-  displayComments()
-  fetchUser()
-  
-})
-
 let menu = document.querySelector("#menu-icon");
 let navlist = document.querySelector(".nav-list");
 
@@ -71,13 +63,11 @@ const isLiked = await checkUserLikedBlog()
 console.log(isLiked)
 
 blogStats.innerHTML = `
-  <button class="like">${ await getLikes()} <i class="fa-regular fa-heart like-icon ${isLiked ? ' liked' : ''}" onClick="likeBlog()"></i></button>
+  <button class="like">${ await getLikes()} <i class="fa-regular fa-heart  ${isLiked ? ' liked' : ''}" onClick="likeBlog()"></i></button>
   <button class="comment">${ await fetchComments()} <i class="fa-regular fa-comment"></i></button>
 `;
 
-blogContent.innerHTML = `
-  <p>${blogPost.description}</p>
-`;
+blogContent.innerHTML = blogPost.description
   } catch(err){
     loader.style.display = "none"
     console.log(err)
@@ -229,9 +219,12 @@ function decodeJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+let decoded;
+if(accesssToken){
+  decoded = decodeJwt(accesssToken);
+}
 
-const decoded = decodeJwt(accesssToken);
-const userId = decoded.userId;
+const userId = decoded?.userId;
 console.log(userId)
 
 
@@ -314,6 +307,12 @@ const fetchUser = async () => {
   }
 }
 
-
+document.addEventListener("DOMContentLoaded", () => {
+  fetchBlog()
+  fetchComments()
+  displayComments()
+  fetchUser()
+  
+})
 
 

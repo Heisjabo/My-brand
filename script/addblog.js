@@ -57,7 +57,7 @@ const validateAndSubmit = async () => {
   if (title && image && body) {
       const formData = new FormData();
       formData.append("title", document.getElementById('title').value);
-      formData.append("description", quill.getText());
+      formData.append("description", quill.root.innerHTML);
       formData.append("image", image)
 
       try{
@@ -82,21 +82,3 @@ const validateAndSubmit = async () => {
       };
 }
 
-
-function likeBlogPost(blogId) {
-  const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-  const blogPost = blogPosts.find(post => post.id === blogId);
-  if (blogPost) {
-    blogPost.likes++;
-    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
-  }
-}
-
-function addCommentToBlogPost(blogId, comment) {
-  const blogPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
-  const blogPost = blogPosts.find(post => post.id === blogId);
-  if (blogPost) {
-    blogPost.comments.push(comment);
-    localStorage.setItem('blogPosts', JSON.stringify(blogPosts));
-  }
-}
