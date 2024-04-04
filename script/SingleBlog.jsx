@@ -50,12 +50,31 @@ const SingleBlog = () => {
     }
   };
 
+  const popupContent = document.getElementById("popup-content");
+  const openPopup = (message) => {
+      const popup = document.getElementById("popup");
+      const popupMessage = document.getElementById("popup-message");
+    
+      popupMessage.innerHTML = message;
+      popup.style.display = "block";
+  
+      const closeBtn  = document.getElementById("popup-ok-button");
+      closeBtn.addEventListener("click", () => {
+        closePopup()
+      })
+    }
+    
+    const closePopup = () => {
+        const popup = document.getElementById("popup");
+        popup.style.display = "none";
+        window.location.href = "./signin.html"
+  }
+
   const addComment = async (e) => {
     e.preventDefault()
     const authorization = sessionStorage.getItem("accessToken");
     if(!authorization){
-        alert("please login to add a comment!");
-        window.location.href = "./signin.html"
+        openPopup("please login to add a comment!");
     }
     if(content){
         try{
@@ -105,32 +124,7 @@ const userId = decoded?.userId;
       }
     return false;
   }
-
   const isLiked = checkUserLiked()
-
-  console.log(isLiked);
-
-
-
-  const popupContent = document.getElementById("popup-content");
-  const openPopup = (message) => {
-      const popup = document.getElementById("popup");
-      const popupMessage = document.getElementById("popup-message");
-    
-      popupMessage.innerHTML = message;
-      popup.style.display = "block";
-  
-      const closeBtn  = document.getElementById("popup-ok-button");
-      closeBtn.addEventListener("click", () => {
-        closePopup()
-      })
-    }
-    
-    const closePopup = () => {
-        const popup = document.getElementById("popup");
-        popup.style.display = "none";
-        window.location.href = "./signin.html"
-  }
 
 const likeBlog = async () => {
     const authorization = sessionStorage.getItem("accessToken");

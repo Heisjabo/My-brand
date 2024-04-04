@@ -153,7 +153,7 @@ function decodeJwt(token) {
   } 
 }
 const decoded = decodeJwt(accesssToken);
-const userId = decoded.userId;
+const userId = decoded?.userId;
 
 const fetchUser = async () => {
   try{
@@ -201,7 +201,7 @@ const trackLoggedUser = async (user) => {
     navbar.appendChild(avatarContainer);
     contactBtn.remove();
   } else {
-    document.querySelector('.avatar-container').remove();
+    document.querySelector('.avatar-container')?.remove();
     navList.innerHTML += '<li><a href="./screens/signin.html">SignIn</a></li>';
   }
   

@@ -3,8 +3,6 @@ const loaderDiv = document.getElementById("loader-element");
 const Blogs = () => {
     const [blogs, setBlogs] = React.useState([]);
 
-
-
     const fetchBlogs = async () => {
         try{
             loaderDiv.style.display = "flex";
