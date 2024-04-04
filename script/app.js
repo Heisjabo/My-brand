@@ -46,7 +46,7 @@ function myFunction() {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetchBlogs();
+  // fetchBlogs();
   fetchUser()
 })
 

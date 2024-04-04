@@ -427,6 +427,16 @@ nav .contact-btn {
     width: 100%;
     text-align: center;
 }
+#single-blog-loader{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
 .loader {
     border: 4px solid #EDEDED;
     width: 50px;

@@ -50,20 +50,20 @@ const fetchBlog = async () => {
     blogPost = data.data;
     console.log(blogPost)
     const blogImage = document.querySelector('.single-blog-container img');
-const blogTitle = document.querySelector('.blog-title');
-const blogStats = document.querySelector('.single-blog-container .blog-headers .blog-stats');
-const blogContent = document.querySelector('.single-blog-container .blog-content');
+  const blogTitle = document.querySelector('.blog-title');
+  const blogStats = document.querySelector('.single-blog-container .blog-headers .blog-stats');
+  const blogContent = document.querySelector('.single-blog-container .blog-content');
 
 
-blogImage.src = blogPost.image;
-blogImage.alt = blogPost.title;
-blogTitle.textContent = blogPost.title;
+  blogImage.src = blogPost.image;
+  blogImage.alt = blogPost.title;
+  blogTitle.textContent = blogPost.title;
 
 const isLiked = await checkUserLikedBlog()
 console.log(isLiked)
 
 blogStats.innerHTML = `
-  <button class="like">${ await getLikes()} <i class="fa-regular fa-heart  ${isLiked ? ' liked' : ''}" onClick="likeBlog()"></i></button>
+  <button class="like">${ await getLikes()} <i class="fa-regular fa-heart  ${isLiked ? 'liked' : ''}" onClick="likeBlog()"></i></button>
   <button class="comment">${ await fetchComments()} <i class="fa-regular fa-comment"></i></button>
 `;
 
@@ -175,38 +175,38 @@ function generateAvatar(name) {
 const commentForm = document.querySelector('.single-blog-container .add-comment form');
 const submitBtn = document.getElementById("submit-comment")
 
-commentForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const commentTextarea = commentForm.querySelector('textarea');
-  const commentText = commentTextarea.value.trim();
-  if (commentText){
-    const authorization = sessionStorage.getItem('accessToken');
-    if (authorization) {
-      try{
-        submitBtn.textContent = "Submitting..."
-        const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/comments`, {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${authorization}`
-          },
-          body: JSON.stringify({ content: commentTextarea.value })
-        });
-        submitBtn.textContent = "Submit"
-        const data = await response.json();
-        console.log(data)
-        // openPopup("your comment was added!");
-        window.location.reload()
-      } catch(err){
-        submitBtn.textContent = "Submit"
-        console.log(err)
-      }
-    } else {
-      window.location.href = "./signin.html"
-    }
-  }
-});
+// commentForm.addEventListener('submit', async (e) => {
+//   e.preventDefault();
+//   const commentTextarea = commentForm.querySelector('textarea');
+//   const commentText = commentTextarea.value.trim();
+//   if (commentText){
+//     const authorization = sessionStorage.getItem('accessToken');
+//     if (authorization) {
+//       try{
+//         submitBtn.textContent = "Submitting..."
+//         const response = await fetch(`https://mybrand-be-x023.onrender.com/api/v1/blogs/${blogId}/comments`, {
+//           method: "POST",
+//           mode: "cors",
+//           headers: {
+//             "Content-Type": "application/json",
+//             "Authorization": `Bearer ${authorization}`
+//           },
+//           body: JSON.stringify({ content: commentTextarea.value })
+//         });
+//         submitBtn.textContent = "Submit"
+//         const data = await response.json();
+//         console.log(data)
+//         // openPopup("your comment was added!");
+//         window.location.reload()
+//       } catch(err){
+//         submitBtn.textContent = "Submit"
+//         console.log(err)
+//       }
+//     } else {
+//       window.location.href = "./signin.html"
+//     }
+//   }
+// });
 
 const accesssToken = sessionStorage.getItem("accessToken");
 
@@ -225,7 +225,6 @@ if(accesssToken){
 }
 
 const userId = decoded?.userId;
-console.log(userId)
 
 
 const checkUserLikedBlog = async () => {
@@ -280,7 +279,7 @@ const trackLoggedUser = async (user) => {
     avatarContainer.appendChild(avatar);
     avatarContainer.appendChild(signOutLink);
 
-    signInLink.remove();
+    signInLink?.remove();
     navbar.appendChild(avatarContainer);
     contactBtn.remove();
   } else {
@@ -308,9 +307,9 @@ const fetchUser = async () => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetchBlog()
-  fetchComments()
-  displayComments()
+  // fetchBlog()
+  // fetchComments()
+  // displayComments()
   fetchUser()
   
 })
