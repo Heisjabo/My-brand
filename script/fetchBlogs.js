@@ -91,7 +91,7 @@ const fetchBlogs = async () => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${blogPost.title}</td>
-        <td>${blogPost.description.slice(0, 10) + "..."}</td>
+        <td>${blogPost.description.slice(0, 30) + "..."}</td>
         <td>12/03/2024</td>
         <td class="actions">
           <i class="fa-regular fa-pen-to-square edit" data-id="${blogPost._id}"></i>
@@ -124,7 +124,7 @@ document.querySelectorAll(".edit").forEach((button) => {
     );
     document.getElementById("title").value = blogPost.title;
     document.getElementById("image").files[0] = blogPost.image;
-    quill.setText(blogPost.description);
+    quill.root.innerHTML = blogPost.description;
 
     document.querySelector(".edit-form").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -175,33 +175,13 @@ window.onclick = function (event) {
 };
 
 
-
-// let isChanged = false;
-// let newImage;
-
-// document.getElementById("title").addEventListener("input", function () {
-//   isChanged = true;
-//   updateButtonState();
-// });
-
-// document.getElementById("image").addEventListener("change", function (e) {
-//   isChanged = true;
-//   updateButtonState();
-//   newImage = e.target.files[0];
-// });
-
-// quill.on("text-change", function () {
-//   isChanged = true;
-//   updateButtonState();
-// });
-
 const upButton = document.getElementById("update-button");
 const originalButton = upButton.textContent;
 
 const editBlog = async (id) => {
   const title = document.getElementById("title").value;
 const image = document.getElementById("image").files[0];
-const body = quill.getText();
+const body = quill.root.innerHTML;
 
 const formData = new FormData()
 
